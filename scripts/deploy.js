@@ -15,7 +15,7 @@ async function main() {
   await sprint.deployed();
 
   console.log(
-    `\nExample Solidity Sprint 2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
+    `\nExampleSoliditySprint2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
   );
 }
 

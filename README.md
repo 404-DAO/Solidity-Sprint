@@ -6,7 +6,7 @@ To build, test, and deploy the example smart contract, we will use Hardhat, an E
 
 First clone the repository and enter the directory.
 ```
-$ git clone https://github.com/404-DAO/Solidity-Sprint-Example.git
+$ git clone https://github.com/404-DAO/Example-Solidity-Sprint.git
 $ cd "Solidity-Sprint-Example"
 ```
 

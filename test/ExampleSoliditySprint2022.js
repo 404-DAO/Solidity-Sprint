@@ -91,7 +91,7 @@ describe("ExampleSoliditySprint2022", function () {
 
       expect(await sprint.scores(otherAccount.address)).to.equal(0);
     });
-    it("Should add score", async function() {
+    it("Should increment score", async function() {
       const { sprint, owner, otherAccount } = await loadFixture(deploySoliditySprint2022);
 
       await sprint.connect(owner).start();
@@ -111,6 +111,26 @@ describe("ExampleSoliditySprint2022", function () {
       expect(await sprint.scores(otherAccount.address)).to.equal(1);
 
       await expect(sprint.connect(otherAccount).f0(false)).to.be.revertedWith("Already completed this function")
+    });
+  });
+  describe("f1 check", function() {
+    it("Should increment score", async function() {
+      const { sprint, owner, otherAccount } = await loadFixture(deploySoliditySprint2022);
+
+      await sprint.connect(owner).start();
+      await sprint.connect(otherAccount).registerTeam("Yackets");
+
+      await sprint.connect(otherAccount).f0(false);
+
+      expect(await sprint.scores(otherAccount.address)).to.equal(1);
+
+      // ADD YOUR CODE HERE!
+      let val = 404;
+      await sprint.connect(otherAccount).f1(val);
+
+      // If this causes an AssertionError then your guess was incorrect
+      // otherwise, you found the correct answer!!
+      expect(await sprint.scores(otherAccount.address)).to.equal(3);
     });
   });
 });

@@ -1,0 +1,21 @@
+[default]
+src = 'src'
+out = 'out'
+libs = [
+    'lib',
+    'node_modules',
+]
+remappings = [
+    'eth-gas-reporter/=node_modules/eth-gas-reporter/',
+    'hardhat/=node_modules/hardhat/',
+]
+
+test = 'test/foundry'
+cache_path = 'forge-cache'
+fuzz_runs = 256
+eth-rpc-url = "https://eth-mainnet.alchemyapi.io/v2/zOVFUzSEld1v_MuTOqGPYkTYttwBUrmF"
+block_number = 15643467
+# eth-rpc-url = "https://rpc.ftm.tools/"
+# block_number = 47971156
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config
+# See more config options https://github.com/foundry-rs/foundry/tree/master/config

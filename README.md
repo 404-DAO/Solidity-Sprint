@@ -1,4 +1,4 @@
-# Solidity-Sprint-Example
+# Example-Solidity-Sprint
 
 ## Getting Started
 

@@ -30,16 +30,18 @@ contract ExampleSoliditySprint2022 {
         live = false;
     }
 
-    function registerTeam(string memory team) public {
-        require(live, "Hackathon not in session");
+    modifier isLive {
+        require(live, "Hackathon is not in session");
         require(bytes(teams[msg.sender]).length == 0, "Already registered team");
+        _;
+    }
+
+    function registerTeam(string memory team) public isLive {
         teams[msg.sender] = team;
     }
 
-    function f0(bool val) public {
+    function f0(bool val) public isLive {
         uint fNum = 0;
-        require(live, "Hackathon not in session");
-        require(bytes(teams[msg.sender]).length != 0, "Must register team name");
         require(progress[msg.sender][fNum] == 0, "Already completed this function");
 
         if (! val) {
@@ -48,10 +50,8 @@ contract ExampleSoliditySprint2022 {
         }
     }
 
-    function f1(uint val) public {
+    function f1(uint val) public isLive {
         uint fNum = 1;
-        require(live, "Hackathon not in session");
-        require(bytes(teams[msg.sender]).length != 0, "Must register team name");
         require(progress[msg.sender][fNum] == 0, "Already completed this function");
         
         uint256 guess = uint256(keccak256(abi.encode(val)));

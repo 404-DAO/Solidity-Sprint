@@ -36,7 +36,9 @@ $ npx hardhat run scripts/deploy.js --network hardhat
 
 Play around with the contract [using Etherscan](https://goerli.etherscan.io/address/0xcfd9741867bad2f94c8bfb91518066436cbe6a20#writeContract) or locally by running tests.
 
-Try to complete `f1`. Note that each transaction sent to the network incurs a gas cost.
+Try to complete `f1`. If you're testing locally using hardhat, [start here](https://github.com/404-DAO/Example-Solidity-Sprint/blob/main/test/ExampleSoliditySprint2022.js#L127).
+
+**Note:** Each transaction sent to the network incurs gas cost, consider this when completing `f1`.
 
 
 

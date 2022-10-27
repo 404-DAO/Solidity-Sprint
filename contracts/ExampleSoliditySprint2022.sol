@@ -2,7 +2,6 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 import "forge-std/console2.sol";
 
@@ -23,7 +22,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
     mapping(address => uint) public secondEntryCount;
     mapping(address => uint) public coinFlipWins;
     mapping(address => uint) public coinflipLastPlay;
-
+    mapping(address => bool) public signers;
 
     constructor() {
         for (uint x = 0; x < 20; x++) {
@@ -126,7 +125,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 7;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(gasleft() > 5_000_000, "not enough gas for function");
+        require(gasleft() > 7_420_420, "not enough gas for function");
 
         progress[msg.sender][fNum] = true;
         scores[msg.sender] += points[fNum];
@@ -161,7 +160,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 10;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(num1 < 0 && num2 > 0, "Numbers must be less than zero");
+        require(num1 < 0 && num2 > 0, "first number must be negative and 2nd number positive");
         unchecked {
             int num3 = num1 - num2;
             require(num3 > 0, "Difference of the two must be more than zero");
@@ -175,7 +174,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 11;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(num1 > 0 && num2 > 0, "Numbers must be less than zero");
+        require(num1 > 0 && num2 > 0, "Numbers must be greater than zero");
         unchecked {
             int num3 = num1 + num2;
             require(num3 < 0, "Difference of the two must be more than zero");
@@ -276,11 +275,13 @@ contract ExampleSoliditySprint2022 is Ownable  {
         
         console2.logBytes32(digest);
         
-        address signer = ECDSA.recover(digest, signature);
+        address signer = recover(digest, signature);
 
         // console2.log("Actual signer: ", signer);
         require(signer == expectedSigner, "Signer of the message did not match actual message signer");
+        require(!signers[signer], "NO REPLAY ATTACKS");
 
+        signers[signer] = true;
         progress[team][fNum] = true;
         scores[team] += points[fNum];
     }

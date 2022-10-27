@@ -86,7 +86,7 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf7() internal {
-        sprint.f7{gas: 6000000}();
+        sprint.f7{gas: 8_000_000}();
     }
 
     function testf8() internal {

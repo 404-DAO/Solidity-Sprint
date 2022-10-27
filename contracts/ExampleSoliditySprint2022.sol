@@ -16,6 +16,11 @@ contract ExampleSoliditySprint2022 is Ownable  {
     mapping(address => mapping(uint => bool)) public progress;
     mapping(uint => uint) public points;
 
+    mapping(address => uint) public entryCount;
+    mapping(address => uint) public secondEntryCount;
+    mapping(address => uint) public coinFlipWins;
+    mapping(address => uint) public coinflipLastPlay;
+
 
     constructor() {
         for (uint x = 0; x < 20; x++) {
@@ -186,14 +191,65 @@ contract ExampleSoliditySprint2022 is Ownable  {
         scores[msg.sender] += points[fNum];
     }
 
-    function f13() public isLive {
+    function f13() public payable isLive {
         uint fNum = 13;
-        // (bool success, bytes memory data) = address(msg.sender).call(bytes(0));
 
+        if (entryCount[msg.sender] <= 5) {
+            entryCount[msg.sender]++;
+            (bool sent, ) = msg.sender.call("");
+            require(sent, "value send failed");
+        }
+
+        progress[msg.sender][fNum] = true;
+        scores[msg.sender] += points[fNum];
     }
 
-    function challengeHook() public isLive returns (bool) {
-        return true;
+    function f14(uint headsOrTails) public payable isLive {
+        uint fNum = 14;
+
+        require(block.timestamp > coinflipLastPlay[msg.sender], "cannot play multiple times in same tx");
+
+        uint badRandomness = uint(keccak256(abi.encodePacked(block.timestamp)));
+
+        uint outcome = badRandomness % 2 == 0 ? 0 : 1;
+
+        require(headsOrTails == outcome, "you guessed wrong. Try Again");
+        coinFlipWins[msg.sender]++;
+        coinflipLastPlay[msg.sender] = block.timestamp;
+
+        if (coinFlipWins[msg.sender] == 5) {
+            progress[msg.sender][fNum] = true;  
+            scores[msg.sender] += points[fNum];
+        }
     }
+
+    function f15(uint difficulty) public isLive {
+        uint fNum = 15;
+
+        require(difficulty == block.difficulty, "incorrect block difficulty");
+
+        progress[msg.sender][fNum] = true;  
+        scores[msg.sender] += points[fNum];
+    }
+
+    function f16(address team) public isLive {
+        uint fNum = 16;
+        require(msg.sender.code.length == 0, "No contracts this time");
+
+        if (secondEntryCount[team] == 0) {
+            secondEntryCount[team]++;
+            (bool sent, ) = msg.sender.call("");
+            require(sent, "value send failed");
+        }
+
+        progress[team][fNum] = true;
+        scores[team] += points[fNum];
+    }
+
+    function challengeHook() public view isLive returns (bool) {
+        require(msg.sender == address(this));
+    }
+
+
 
 }

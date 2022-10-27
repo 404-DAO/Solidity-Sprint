@@ -47,6 +47,7 @@ contract SoliditySprintSolutions is Test {
 
         testf15();
         testf16();
+        testf17();
     }
 
     function testf0() internal {
@@ -89,12 +90,12 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf8() internal {
-        bytes memory data = "AAAAAAAAAAAAAAAA";
+        bytes memory data = "AAAAAAAAAAAAAAAA"; // 16 'A's
         sprint.f8(data);
     }
 
     function testf9() internal {
-        sprint.f9("AAA");
+        sprint.f9("AAAAAAAAAAAA");
     }
 
     function testf10() internal {
@@ -125,6 +126,12 @@ contract SoliditySprintSolutions is Test {
 
     function testf16() internal {
         new tempAttacker(address(this), address(sprint));
+    }
+
+    function testf17() internal {
+        bytes memory signature = hex"fdeb5c1a5b648fa543a8abc000b2240b37651b0e3c7584e355e3674c6de93a54429ab449a1a0554bc14020f28b856e468b63054793eda0d5437aea069d7140461b";
+        address signerAddr = 0x9cB2137Fbb2Ef0638863BE81b4944743354cB7c0;
+        sprint.f17(address(this), signerAddr, signature);
     }
 
     fallback() external {

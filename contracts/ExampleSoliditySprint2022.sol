@@ -2,7 +2,10 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+
 import "forge-std/console2.sol";
+
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
@@ -134,7 +137,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 8;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        console2.log("data length: ", data.length);
+        // console2.log("data length: ", data.length);
 
         require(data.length == 16, "invalid length of data");
 
@@ -142,11 +145,12 @@ contract ExampleSoliditySprint2022 is Ownable  {
         scores[msg.sender] += points[fNum];
     }
 
-    function f9(bytes calldata data) public isLive {
+    function f9(bytes memory data) public isLive {
         uint fNum = 9;
-        require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(msg.sig == 0x787f485a, "invalid function selector");
+        require(!progress[msg.sender][fNum], "Already completed this function");
+        data = abi.encodePacked(msg.sig, data);
+        require(data.length == 16);
 
         progress[msg.sender][fNum] = true;
         scores[msg.sender] += points[fNum];
@@ -184,6 +188,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
     function f12(bytes memory data) public isLive {
         uint fNum = 12;
 
+        require(!progress[msg.sender][fNum], "Already completed this function");
+
+
         (bool success, bytes memory data) = address(this).call(data);
         require(success, "internal function call did not succeed");
 
@@ -193,6 +200,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
     function f13() public payable isLive {
         uint fNum = 13;
+
+        require(!progress[msg.sender][fNum], "Already completed this function");
+
 
         if (entryCount[msg.sender] <= 5) {
             entryCount[msg.sender]++;
@@ -207,13 +217,19 @@ contract ExampleSoliditySprint2022 is Ownable  {
     function f14(uint headsOrTails) public payable isLive {
         uint fNum = 14;
 
+        require(!progress[msg.sender][fNum], "Already completed this function");
+
         require(block.timestamp > coinflipLastPlay[msg.sender], "cannot play multiple times in same tx");
 
         uint badRandomness = uint(keccak256(abi.encodePacked(block.timestamp)));
 
         uint outcome = badRandomness % 2 == 0 ? 0 : 1;
 
-        require(headsOrTails == outcome, "you guessed wrong. Try Again");
+        if (headsOrTails != outcome) {
+            coinFlipWins[msg.sender] = 0;
+            revert("you guessed wrong. Try Again");
+        }
+
         coinFlipWins[msg.sender]++;
         coinflipLastPlay[msg.sender] = block.timestamp;
 
@@ -226,6 +242,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
     function f15(uint difficulty) public isLive {
         uint fNum = 15;
 
+        require(!progress[msg.sender][fNum], "Already completed this function");
+
         require(difficulty == block.difficulty, "incorrect block difficulty");
 
         progress[msg.sender][fNum] = true;  
@@ -234,13 +252,34 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
     function f16(address team) public isLive {
         uint fNum = 16;
-        require(msg.sender.code.length == 0, "No contracts this time");
+
+        require(!progress[team][fNum], "Already completed this function");
+
+        require(msg.sender.code.length == 0, "No contracts this time!");
 
         if (secondEntryCount[team] == 0) {
             secondEntryCount[team]++;
             (bool sent, ) = msg.sender.call("");
-            require(sent, "value send failed");
+            require(sent, "external call failed");
         }
+
+        progress[team][fNum] = true;
+        scores[team] += points[fNum];
+    }
+
+    function f17(address team, address expectedSigner, bytes memory signature) external isLive {
+        uint fNum = 17;
+
+        require(!progress[team][fNum], "Already completed this function");
+
+        bytes32 digest = keccak256("Have you ever heard the tragedy of Darth Plageus the wise?");
+        
+        console2.logBytes32(digest);
+        
+        address signer = ECDSA.recover(digest, signature);
+
+        // console2.log("Actual signer: ", signer);
+        require(signer == expectedSigner, "Signer of the message did not match actual message signer");
 
         progress[team][fNum] = true;
         scores[team] += points[fNum];
@@ -249,6 +288,36 @@ contract ExampleSoliditySprint2022 is Ownable  {
     function challengeHook() public view isLive returns (bool) {
         require(msg.sender == address(this));
     }
+
+    function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {
+        bytes32 r;
+        bytes32 s;
+        uint8 v;
+
+        //Check the signature length
+        if (sig.length != 65) {
+        return (address(0));
+        }
+
+        // Divide the signature in r, s and v variables
+        assembly {
+        r := mload(add(sig, 32))
+        s := mload(add(sig, 64))
+        v := byte(0, mload(add(sig, 96)))
+        }
+
+        // Version of signature should be 27 or 28, but 0 and 1 are also possible versions
+        if (v < 27) {
+        v += 27;
+        }
+
+        // If the version is correct return the signer address
+        if (v != 27 && v != 28) {
+        return (address(0));
+        } else {
+        return ecrecover(hash, v, r, s);
+        }
+  }
 
 
 

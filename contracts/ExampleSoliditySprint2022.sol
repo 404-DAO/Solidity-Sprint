@@ -23,12 +23,14 @@ contract ExampleSoliditySprint2022 is Ownable  {
     mapping(address => uint) public coinFlipWins;
     mapping(address => uint) public coinflipLastPlay;
     mapping(address => bool) public signers;
+    mapping(uint => uint) public solves;
 
     constructor() {
         for (uint x = 0; x < 20; x++) {
             points[x] = x + 1;
         }
     }
+
 
     function start() public onlyOwner {
         live = true;
@@ -48,6 +50,15 @@ contract ExampleSoliditySprint2022 is Ownable  {
         teams[msg.sender] = team;
     }
 
+    function reducePoints(uint challengeNum) internal {
+        solves[challengeNum]++;
+
+        //Every 5 solves the points get cut in half
+        if (solves[challengeNum] % 5 == 0) {
+            points[challengeNum] /= 2;
+        }
+    }
+
     function f0(bool val) public isLive {
         uint fNum = 0;
         require(!progress[msg.sender][fNum], "Already completed this function");
@@ -58,26 +69,26 @@ contract ExampleSoliditySprint2022 is Ownable  {
         }
     }
 
-    function f1(uint val) public isLive {
+    function f1() public payable isLive {
         uint fNum = 1;
-        require(!progress[msg.sender][fNum], "Already completed this function");
-        
-        uint256 guess = uint256(keccak256(abi.encode(val)));
-
-        if (guess % 404 == 0) {
-            progress[msg.sender][fNum] = true;
-            scores[msg.sender] += points[fNum];
-        }
-    }
-
-    function f2() public payable isLive {
-        uint fNum = 2;
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
         require(msg.value == 1 wei, "Invalid Message Value");
         progress[msg.sender][fNum] = true;
         scores[msg.sender] += points[fNum];
+    }
+
+    function f2(uint val) public isLive {
+        uint fNum = 2;
+        require(!progress[msg.sender][fNum], "Already completed this function");
+        
+        uint256 guess = uint256(keccak256(abi.encode(val)));
+
+        if (guess % 10 == 0) {
+            progress[msg.sender][fNum] = true;
+            scores[msg.sender] += points[fNum];
+        }
     }
 
     function f3(uint data) public isLive {
@@ -148,6 +159,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 9;
 
         require(!progress[msg.sender][fNum], "Already completed this function");
+
         data = abi.encodePacked(msg.sig, data);
         require(data.length == 16);
 
@@ -190,8 +202,11 @@ contract ExampleSoliditySprint2022 is Ownable  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
 
-        (bool success, bytes memory data) = address(this).call(data);
+        (bool success, bytes memory returnData) = address(this).call(data);
         require(success, "internal function call did not succeed");
+        
+        console2.logBytes(returnData);
+        require(returnData == 0xdeadbeef);
 
         progress[msg.sender][fNum] = true;
         scores[msg.sender] += points[fNum];
@@ -277,6 +292,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
         
         address signer = recover(digest, signature);
 
+        require(signer != address(0), "must be a valid signature by someone");
+
         // console2.log("Actual signer: ", signer);
         require(signer == expectedSigner, "Signer of the message did not match actual message signer");
         require(!signers[signer], "NO REPLAY ATTACKS");
@@ -286,8 +303,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
         scores[team] += points[fNum];
     }
 
-    function challengeHook() public view isLive returns (bool) {
+    function challengeHook() public view isLive returns (uint) {
         require(msg.sender == address(this));
+        return 0xdeadbeef;
     }
 
     function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {
@@ -314,9 +332,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         // If the version is correct return the signer address
         if (v != 27 && v != 28) {
-        return (address(0));
+            return (address(0));
         } else {
-        return ecrecover(hash, v, r, s);
+            return ecrecover(hash, v, r, s);
         }
   }
 

@@ -27,10 +27,10 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
     constructor() {
         for (uint x = 0; x < 20; x++) {
-            points[x] = x + 1;
+            //It's 200 because solidity fixed-point math makes division annoying with 100
+            points[x] = 200 + (200*x);
         }
     }
-
 
     function start() public onlyOwner {
         live = true;
@@ -50,8 +50,11 @@ contract ExampleSoliditySprint2022 is Ownable  {
         teams[msg.sender] = team;
     }
 
-    function reducePoints(uint challengeNum) internal {
+    function givePoints(uint challengeNum, address team) internal {
         solves[challengeNum]++;
+
+        progress[team][challengeNum] = true;
+        scores[team] += points[challengeNum];
 
         //Every 5 solves the points get cut in half
         if (solves[challengeNum] % 5 == 0) {
@@ -63,10 +66,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
         uint fNum = 0;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        if (! val) {
-            progress[msg.sender][fNum] = true; 
-            scores[msg.sender] += points[fNum];
-        }
+        require(!val, "incorrect boolean value");
+
+        givePoints(fNum, msg.sender);
     }
 
     function f1() public payable isLive {
@@ -75,20 +77,20 @@ contract ExampleSoliditySprint2022 is Ownable  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
         require(msg.value == 1 wei, "Invalid Message Value");
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f2(uint val) public isLive {
         uint fNum = 2;
         require(!progress[msg.sender][fNum], "Already completed this function");
         
-        uint256 guess = uint256(keccak256(abi.encode(val)));
+        uint256 guess = uint256(keccak256(abi.encodePacked(val, msg.sender)));
 
-        if (guess % 10 == 0) {
-            progress[msg.sender][fNum] = true;
-            scores[msg.sender] += points[fNum];
-        }
+        require(guess % 10 == 0, "gues incorrect");
+
+        givePoints(fNum, msg.sender);
+
     }
 
     function f3(uint data) public isLive {
@@ -98,8 +100,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
         require(xorData == 0xdeadbeef, "Invalid Input");
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
 
@@ -108,8 +110,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
         require(destAddr == address(this), "incorrect address. try again");
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f5(address destAddr) public isLive {
@@ -118,8 +120,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         require(destAddr == msg.sender, "incorrect address. try again");
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f6(address destAddr) public isLive {
@@ -128,8 +130,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         require(destAddr == owner(), "incorrect address. try again");
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f7() public isLive {
@@ -138,8 +140,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         require(gasleft() > 7_420_420, "not enough gas for function");
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
 
@@ -151,8 +153,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         require(data.length == 16, "invalid length of data");
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f9(bytes memory data) public isLive {
@@ -163,8 +165,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
         data = abi.encodePacked(msg.sig, data);
         require(data.length == 16);
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
 
@@ -178,8 +180,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
             require(num3 > 0, "Difference of the two must be more than zero");
         }
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f11(int num1, int num2) public isLive {
@@ -192,8 +194,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
             require(num3 < 0, "Difference of the two must be more than zero");
         }
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f12(bytes memory data) public isLive {
@@ -205,11 +207,11 @@ contract ExampleSoliditySprint2022 is Ownable  {
         (bool success, bytes memory returnData) = address(this).call(data);
         require(success, "internal function call did not succeed");
         
-        console2.logBytes(returnData);
-        require(returnData == 0xdeadbeef);
+        // console2.logBytes(returnData);
+        // require(returnData == 0xdeadbeef);
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f13() public payable isLive {
@@ -224,8 +226,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
             require(sent, "value send failed");
         }
 
-        progress[msg.sender][fNum] = true;
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f14(uint headsOrTails) public payable isLive {
@@ -248,8 +250,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
         coinflipLastPlay[msg.sender] = block.timestamp;
 
         if (coinFlipWins[msg.sender] == 5) {
-            progress[msg.sender][fNum] = true;  
-            scores[msg.sender] += points[fNum];
+            givePoints(fNum, msg.sender);
         }
     }
 
@@ -260,8 +261,8 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         require(difficulty == block.difficulty, "incorrect block difficulty");
 
-        progress[msg.sender][fNum] = true;  
-        scores[msg.sender] += points[fNum];
+        givePoints(fNum, msg.sender);
+
     }
 
     function f16(address team) public isLive {
@@ -277,8 +278,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
             require(sent, "external call failed");
         }
 
-        progress[team][fNum] = true;
-        scores[team] += points[fNum];
+        givePoints(fNum, team);
     }
 
     function f17(address team, address expectedSigner, bytes memory signature) external isLive {
@@ -299,13 +299,13 @@ contract ExampleSoliditySprint2022 is Ownable  {
         require(!signers[signer], "NO REPLAY ATTACKS");
 
         signers[signer] = true;
-        progress[team][fNum] = true;
-        scores[team] += points[fNum];
+        givePoints(fNum, team);
+
     }
 
     function challengeHook() public view isLive returns (uint) {
         require(msg.sender == address(this));
-        return 0xdeadbeef;
+        // return 0xdeadbeef;
     }
 
     function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {

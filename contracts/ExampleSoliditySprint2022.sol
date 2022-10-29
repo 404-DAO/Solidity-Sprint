@@ -2,14 +2,13 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-import "forge-std/console2.sol";
-
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 // Uncomment this line to use console.log
-// import "hardhat/console.sol";
+import "forge-std/console2.sol";
 
-contract ExampleSoliditySprint2022 is Ownable  {
+contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     bool public live;
 
@@ -25,7 +24,7 @@ contract ExampleSoliditySprint2022 is Ownable  {
     mapping(address => bool) public signers;
     mapping(uint => uint) public solves;
 
-    constructor() {
+    constructor(string memory uri) ERC1155(uri){
         for (uint x = 0; x < 20; x++) {
             //It's 200 because solidity fixed-point math makes division annoying with 100
             points[x] = 200 + (200*x);
@@ -207,11 +206,9 @@ contract ExampleSoliditySprint2022 is Ownable  {
         (bool success, bytes memory returnData) = address(this).call(data);
         require(success, "internal function call did not succeed");
         
-        // console2.logBytes(returnData);
-        // require(returnData == 0xdeadbeef);
+        require(keccak256(returnData) == keccak256(abi.encode(0xdeadbeef)));
 
         givePoints(fNum, msg.sender);
-
     }
 
     function f13() public payable isLive {
@@ -300,12 +297,24 @@ contract ExampleSoliditySprint2022 is Ownable  {
 
         signers[signer] = true;
         givePoints(fNum, team);
+    }
 
+    function f18(uint amount, address dest, address team) public isLive {
+        uint fNum = 18;
+        require(!progress[team][fNum], "Already completed this function");
+
+        require(msg.sender.code.length > 0, "Must be contract");
+        require(amount > 0, "must provide non-zero amount of FNFTs to mint");
+
+        uint id = uint(keccak256(abi.encode(msg.sender)));
+        _mint(dest, id, amount, "set the gearshift for the high gear of your soul");
+
+        givePoints(fNum, team);
     }
 
     function challengeHook() public view isLive returns (uint) {
         require(msg.sender == address(this));
-        // return 0xdeadbeef;
+        return 0xdeadbeef;
     }
 
     function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {

@@ -3,13 +3,15 @@ pragma solidity >= 0.8.5;
 import "forge-std/Test.sol";
 import "contracts/ExampleSoliditySprint2022.sol";
 import "forge-std/console2.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract SoliditySprintSolutions is Test {
 
     ExampleSoliditySprint2022 sprint;
 
     constructor() {
-        sprint = new ExampleSoliditySprint2022();
+        string memory tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
+        sprint = new ExampleSoliditySprint2022(tokenURI);
         sprint.start();
 
     }
@@ -116,9 +118,24 @@ contract SoliditySprintSolutions is Test {
         sprint.f17(address(this), signerAddr, signature);
     }
 
+    function testf18() public pointsIncreased {
+        sprint.f18(5, address(this), address(this));
+    }
+
     fallback() external {
         sprint.f13();
     }
+
+    function onERC1155Received(
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
+        bytes calldata data
+    ) external returns (bytes4) {
+        return bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
+    }
+
 }
 
 contract tempAttacker {

@@ -99,7 +99,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         
         uint256 guess = uint256(keccak256(abi.encodePacked(val, msg.sender)));
 
-        require(guess % 23 == 0, "guess incorrect");
+        require(guess % 5 == 0, "guess incorrect");
 
         givePoints(fNum, msg.sender);
 

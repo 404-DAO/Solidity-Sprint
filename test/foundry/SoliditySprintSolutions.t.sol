@@ -37,7 +37,7 @@ contract SoliditySprintSolutions is Test {
     function testf2() internal {
         for(uint x = 0; x < type(uint).max; x++) {
             uint256 guess = uint256(keccak256(abi.encodePacked(x, address(this))));
-            if (guess % 10 == 0) {
+            if (guess % 23 == 0) {
                 sprint.f2(guess);
                 return;
             }
@@ -126,6 +126,12 @@ contract SoliditySprintSolutions is Test {
         sprint.f19(address(this));
     }
 
+    function testf20() public pointsIncreased {
+        address prediction = predictDeterministicAddress(address(sprint.template()), keccak256(abi.encode(address(this))), address(sprint));
+        sprint.f20(prediction, address(this));
+    
+    }
+
     fallback() external {
         sprint.f13();
     }
@@ -141,8 +147,25 @@ contract SoliditySprintSolutions is Test {
     }
 
     function supportsInterface(bytes4 interfaceId) external returns (bool) {
-        console2.logBytes4(type(IERC20).interfaceId);
+        // console2.logBytes4(type(IERC20).interfaceId);
         return type(IERC20).interfaceId == interfaceId;
+    }
+
+    function predictDeterministicAddress(
+        address implementation,
+        bytes32 salt,
+        address deployer
+    ) internal pure returns (address predicted) {
+        assembly {
+            let ptr := mload(0x40)
+            mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)
+            mstore(add(ptr, 0x14), shl(0x60, implementation))
+            mstore(add(ptr, 0x28), 0x5af43d82803e903d91602b57fd5bf3ff00000000000000000000000000000000)
+            mstore(add(ptr, 0x38), shl(0x60, deployer))
+            mstore(add(ptr, 0x4c), salt)
+            mstore(add(ptr, 0x6c), keccak256(ptr, 0x37))
+            predicted := keccak256(add(ptr, 0x37), 0x55)
+        }
     }
 
 }

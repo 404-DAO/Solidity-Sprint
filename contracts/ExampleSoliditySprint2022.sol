@@ -23,8 +23,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     mapping(address => uint) public entryCount;
     mapping(address => uint) public secondEntryCount;
-    mapping(address => uint) public coinFlipWins;
-    mapping(address => uint) public coinflipLastPlay;
+    mapping(address => uint) public diceRollWins;
+    mapping(address => uint) public diceRollLastWin;
     mapping(address => bool) public signers;
     mapping(uint => uint) public solves;
 
@@ -69,7 +69,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         scores[team] += points[challengeNum];
 
         //Every 5 solves the points get cut in half
-        if (solves[challengeNum] % 5 == 0) {
+        if (challengeNum >= 9) {
             points[challengeNum] /= 2;
         }
     }
@@ -88,7 +88,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(msg.value == 1 wei, "Invalid Message Value");
+        require(msg.value == 1e3 wei, "Invalid Message Value");
         givePoints(fNum, msg.sender);
 
     }
@@ -107,11 +107,11 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     function f3(uint data) public isLive {
         uint fNum = 3;
-        uint xorData = data ^ 0x123456789;
+        uint xorData = data ^ 0x987654321;
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(xorData == 0xdeadbeef, "Invalid Input");
+        require(xorData == 0xbeefdead, "Invalid Input");
         givePoints(fNum, msg.sender);
 
     }
@@ -150,7 +150,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         uint fNum = 7;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(gasleft() > 7_420_420, "not enough gas for function");
+        require(gasleft() > 6_969_420, "not enough gas for function");
 
         givePoints(fNum, msg.sender);
 
@@ -161,7 +161,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         uint fNum = 8;
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(data.length == 16, "invalid length of data");
+        require(data.length == 32, "invalid length of data");
 
         givePoints(fNum, msg.sender);
 
@@ -173,7 +173,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
         data = abi.encodePacked(msg.sig, data);
-        require(data.length == 16);
+        require(data.length == 32);
 
         givePoints(fNum, msg.sender);
 
@@ -187,7 +187,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         require(num1 < 0 && num2 > 0, "first number must be negative and 2nd number positive");
         unchecked {
             int num3 = num1 - num2;
-            require(num3 > 0, "Difference of the two must be more than zero");
+            require(num3 > 10, "Difference of the two must be more than zero");
         }
 
         givePoints(fNum, msg.sender);
@@ -201,7 +201,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         require(num1 > 0 && num2 > 0, "Numbers must be greater than zero");
         unchecked {
             int num3 = num1 + num2;
-            require(num3 < 0, "Difference of the two must be more than zero");
+            require(num3 < -10, "Difference of the two must be more than zero");
         }
 
         givePoints(fNum, msg.sender);
@@ -228,7 +228,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         require(!progress[msg.sender][fNum], "Already completed this function");
 
 
-        if (entryCount[msg.sender] <= 5) {
+        if (entryCount[msg.sender] <= 10) {
             entryCount[msg.sender]++;
             (bool sent, ) = msg.sender.call("");
             require(sent, "value send failed");
@@ -238,26 +238,26 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     }
 
-    function f14(uint headsOrTails) public payable isLive {
+    function f14(uint diceRoll) public payable isLive {
         uint fNum = 14;
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(block.timestamp > coinflipLastPlay[msg.sender], "cannot play multiple times in same tx");
+        require(block.timestamp > diceRollLastWin[msg.sender], "cannot play multiple times in same tx");
 
-        uint badRandomness = uint(keccak256(abi.encodePacked(block.timestamp)));
+        uint badRandomness = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, block.number)));
 
-        uint outcome = badRandomness % 2 == 0 ? 0 : 1;
+        uint outcome = badRandomness % 6;
 
-        if (headsOrTails != outcome) {
-            coinFlipWins[msg.sender] = 0;
+        if (diceRoll != outcome) {
+            diceRollWins[msg.sender] = 0;
             revert("Gotta steal time from the faulty plan");
         }
 
-        coinFlipWins[msg.sender]++;
-        coinflipLastPlay[msg.sender] = block.timestamp;
+        diceRollWins[msg.sender]++;
+        diceRollLastWin[msg.sender] = block.timestamp;
 
-        if (coinFlipWins[msg.sender] == 5) {
+        if (diceRollWins[msg.sender] == 5) {
             givePoints(fNum, msg.sender);
         }
     }
@@ -267,7 +267,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(difficulty == block.difficulty, "Did I make this challenge too difficult?");
+        require(difficulty == uint(keccak256(abi.encode(block.difficulty))), "Did I make this challenge too difficult?");
 
         givePoints(fNum, msg.sender);
 

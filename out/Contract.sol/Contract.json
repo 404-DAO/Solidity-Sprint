@@ -2,30 +2,30 @@
   "abi": [],
   "bytecode": {
     "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220c21a7b09a05d53acecba12da91ecacb660eb71de6198ca3571b9a46357cc7c6464736f6c634300080d0033",
-    "sourceMap": "65:20:10:-:0;;;;;;;;;;;;;;;;;;;",
+    "sourceMap": "65:20:20:-:0;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
     "object": "0x6080604052600080fdfea2646970667358221220c21a7b09a05d53acecba12da91ecacb660eb71de6198ca3571b9a46357cc7c6464736f6c634300080d0033",
-    "sourceMap": "65:20:10:-:0;;;;;",
+    "sourceMap": "65:20:20:-:0;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {},
   "ast": {
     "absolutePath": "src/Contract.sol",
-    "id": 23230,
+    "id": 23330,
     "exportedSymbols": {
       "Contract": [
-        23229
+        23329
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:47:10",
+    "src": "39:47:20",
     "nodes": [
       {
-        "id": 23228,
+        "id": 23328,
         "nodeType": "PragmaDirective",
-        "src": "39:24:10",
+        "src": "39:24:20",
         "literals": [
           "solidity",
           "^",
@@ -34,9 +34,9 @@
         ]
       },
       {
-        "id": 23229,
+        "id": 23329,
         "nodeType": "ContractDefinition",
-        "src": "65:20:10",
+        "src": "65:20:20",
         "abstract": false,
         "baseContracts": [],
         "canonicalName": "Contract",
@@ -44,15 +44,15 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          23229
+          23329
         ],
         "name": "Contract",
-        "nameLocation": "74:8:10",
-        "scope": 23230,
+        "nameLocation": "74:8:20",
+        "scope": 23330,
         "usedErrors": []
       }
     ],
     "license": "UNLICENSED"
   },
-  "id": 10
+  "id": 20
 }

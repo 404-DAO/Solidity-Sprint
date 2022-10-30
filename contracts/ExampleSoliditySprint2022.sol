@@ -34,7 +34,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     uint salt = 0;
 
     constructor(string memory uri) ERC1155(uri){
-        for (uint x = 0; x <= 20; x++) {
+        for (uint x = 0; x <= 21; x++) {
             
             points[x] = 200 + (200*x);
         }
@@ -68,10 +68,16 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         progress[team][challengeNum] = true;
         scores[team] += points[challengeNum];
 
-        //Every 5 solves the points get cut in half
+        if (solves[challengeNum] == 0) {
+            scores[team] += 5;
+        }
+
         if (challengeNum >= 9) {
             points[challengeNum] /= 2;
         }
+
+        solves[challengeNum]++;
+
     }
 
     function f0(bool val) public isLive {
@@ -88,9 +94,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(!progress[msg.sender][fNum], "Already completed this function");
 
-        require(msg.value == 1e3 wei, "Invalid Message Value");
+        require(msg.value == 10 wei, "Invalid Message Value");
         givePoints(fNum, msg.sender);
-
     }
 
     function f2(uint val) public isLive {
@@ -314,7 +319,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         uint fNum = 18;
         require(!progress[team][fNum], "Already completed this function");
 
-        require(msg.sender.code.length > 0, "Must be contract");
+        require(msg.sender.code.length > 0 && tx.origin != msg.sender, "Must be contract");
         require(amount > 0, "must provide non-zero amount of FNFTs to mint");
 
         uint id = uint(keccak256(abi.encode(msg.sender)));
@@ -340,6 +345,29 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         require(newContract == clone, "Predicted address incorrect");
 
         givePoints(fNum, team);
+    }
+
+    function f21(uint gasNeeded, address team) public isLive {
+        uint fNum = 21;
+        require(!progress[team][fNum], "Already completed this function");
+
+        uint gasProvided = gasleft();
+
+        uint sum = 6 weeks + 8 hours + 12 days + 13 minutes + 69 seconds;
+        uint lotsofConstants = uint(keccak256(abi.encode(
+            sum, 
+            blockhash(block.number - 52),
+            block.timestamp,
+            block.gaslimit,
+            block.coinbase,
+            tx.origin      
+        )));
+
+        uint gasRemaining = gasProvided - gasleft();
+        require(gasNeeded == gasRemaining, "Not Enough Gas");
+
+        givePoints(fNum, team);
+
     }
 
     function challengeHook() public view isLive returns (uint) {

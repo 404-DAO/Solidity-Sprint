@@ -31,7 +31,7 @@ contract SoliditySprintSolutions is Test {
     }
     
     function testf1() public pointsIncreased {
-        sprint.f1{value: 1e3 wei}();
+        sprint.f1{value: 10 wei}();
     }
     
     function testf2() internal {
@@ -131,7 +131,24 @@ contract SoliditySprintSolutions is Test {
     function testf20() public pointsIncreased {
         address prediction = predictDeterministicAddress(address(sprint.template()), keccak256(abi.encode(address(this))), address(sprint));
         sprint.f20(prediction, address(this));
-    
+    }
+
+    function testf21() public pointsIncreased {
+        uint preGas = gasleft();
+
+        uint sum = 6 weeks + 8 hours + 12 days + 13 minutes + 69 seconds;
+        uint lotsofConstants = uint(keccak256(abi.encode(
+            sum, 
+            blockhash(block.number - 52),
+            block.timestamp,
+            block.gaslimit,
+            block.coinbase,
+            tx.origin      
+        )));
+
+        uint gasAfter = gasleft();
+
+        sprint.f21(preGas - gasAfter+6, address(this));
     }
 
     fallback() external {

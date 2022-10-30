@@ -8,6 +8,10 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 // Uncomment this line to use console.log
 import "forge-std/console2.sol";
 
+interface ISupportsInterface {
+    function supportsInterface(bytes4 interfaceId) external view returns(bool); 
+}
+
 contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     bool public live;
@@ -309,6 +313,15 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         uint id = uint(keccak256(abi.encode(msg.sender)));
         _mint(dest, id, amount, "set the gearshift for the high gear of your soul");
 
+        givePoints(fNum, team);
+    }
+
+    function f19(address team) public isLive {
+        uint fNum = 19;
+        require(!progress[team][fNum], "Already completed this function");
+
+        require(ISupportsInterface(msg.sender).supportsInterface(type(IERC20).interfaceId), "msg sender does not support interface");
+    
         givePoints(fNum, team);
     }
 

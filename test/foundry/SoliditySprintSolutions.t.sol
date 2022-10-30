@@ -3,7 +3,7 @@ pragma solidity >= 0.8.5;
 import "forge-std/Test.sol";
 import "contracts/ExampleSoliditySprint2022.sol";
 import "forge-std/console2.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 contract SoliditySprintSolutions is Test {
 
@@ -122,6 +122,10 @@ contract SoliditySprintSolutions is Test {
         sprint.f18(5, address(this), address(this));
     }
 
+    function testf19() public pointsIncreased {
+        sprint.f19(address(this));
+    }
+
     fallback() external {
         sprint.f13();
     }
@@ -134,6 +138,11 @@ contract SoliditySprintSolutions is Test {
         bytes calldata data
     ) external returns (bytes4) {
         return bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
+    }
+
+    function supportsInterface(bytes4 interfaceId) external returns (bool) {
+        console2.logBytes4(type(IERC20).interfaceId);
+        return type(IERC20).interfaceId == interfaceId;
     }
 
 }

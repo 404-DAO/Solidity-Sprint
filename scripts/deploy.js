@@ -9,14 +9,24 @@ require('dotenv').config();
 
 async function main() {
 
+  const tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
+
   const Sprint = await hre.ethers.getContractFactory("ExampleSoliditySprint2022");
-  const sprint = await Sprint.deploy();
+  const sprint = await Sprint.deploy(tokenURI);
 
   await sprint.deployed();
 
   console.log(
     `\nExampleSoliditySprint2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
   );
+
+  console.log("Verifying on Etherscan");
+
+  await run("verify:verify", {
+    address: sprint.address,
+    constructorArguments: [tokenURI],
+  })
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere

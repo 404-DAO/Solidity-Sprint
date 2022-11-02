@@ -461,9 +461,47 @@
         }
       }
     },
+    "test/foundry/MerkleProofs.sol": {
+      "lastModificationDate": 1667356250228,
+      "contentHash": "470a1733705cb3b1392f6826b773dd06",
+      "sourceName": "test/foundry/MerkleProofs.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "merkleProofs": {
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "MerkleProofs.sol/merkleProofs.json"
+        }
+      }
+    },
     "test/foundry/SoliditySprintSolutions.t.sol": {
-      "lastModificationDate": 1667171375781,
-      "contentHash": "7415462812fc17bfce49ce978b11722d",
+      "lastModificationDate": 1667359957268,
+      "contentHash": "9cc32456180c90ca422bbac1c1bb3f79",
       "sourceName": "test/foundry/SoliditySprintSolutions.t.sol",
       "solcConfig": {
         "settings": {
@@ -500,7 +538,8 @@
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
         "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol"
+        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "test/foundry/MerkleProofs.sol"
       ],
       "versionRequirement": null,
       "artifacts": {

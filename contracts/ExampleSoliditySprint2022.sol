@@ -17,6 +17,7 @@ interface ISupportsInterface {
 contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     bool public live;
+    bool public timeExtended = false;
 
     mapping(address => string) public teams;
     mapping(address => uint) public scores;
@@ -39,17 +40,21 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     address public immutable weth;
     bytes32 public immutable merkleRoot;
 
+    uint startTime;
+
     constructor(string memory uri, address _weth) ERC1155(uri){
         for (uint x = 0; x <= 24; x++) {
             
             points[x] = 200 + (200*x);
         }
 
+        startTime = block.timestamp;
+
         template = new create2Challenge();
         weth = _weth;
 
-        bytes32[] memory numbers = new bytes32[](10);
-        for (uint x = 0; x < 10; x++) {
+        bytes32[] memory numbers = new bytes32[](20);
+        for (uint x = 0; x < 20; x++) {
             numbers[x] = bytes32(keccak256(abi.encodePacked(x)));
         }
         
@@ -64,9 +69,22 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         live = false;
     }
 
+    function extendTime() public onlyOwner {
+        timeExtended = true;
+    }
+
     modifier isLive {
         require(live, "Hackathon is not in session");
         require(bytes(teams[msg.sender]).length == 0, "Already registered team");
+        
+        if (timeExtended) {
+            require(block.timestamp < startTime + 3 hours, "Time has expired");
+        }
+        else {
+            require(block.timestamp < startTime + 2 hours, "Time has expired");
+
+        }
+
         _;
     }
 

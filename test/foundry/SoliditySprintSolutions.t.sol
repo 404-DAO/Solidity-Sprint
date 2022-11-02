@@ -167,8 +167,8 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf24() public pointsIncreased {
-        bytes32[] memory numbers = new bytes32[](10);
-        for (uint x = 0; x < 10; x++) {
+        bytes32[] memory numbers = new bytes32[](20);
+        for (uint x = 0; x < 20; x++) {
             numbers[x] = keccak256(abi.encodePacked(x));
         }
 

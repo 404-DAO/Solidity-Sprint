@@ -22,5 +22,5 @@ cache
 artifacts
 
 #Foundry Files
-out
+out/
 forge-cache

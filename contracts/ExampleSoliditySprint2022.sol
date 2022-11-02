@@ -101,7 +101,10 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         solves[challengeNum]++;
 
         progress[team][challengeNum] = true;
-        scores[team] += points[challengeNum];
+
+        if (challengeNum != 25) {
+            scores[team] += points[challengeNum];
+        }
 
         if (solves[challengeNum] == 0) {
             scores[team] += 5;
@@ -458,6 +461,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
                 revert(0, 0)
             }
         }
+
         givePoints(fNum, team);
     }
 

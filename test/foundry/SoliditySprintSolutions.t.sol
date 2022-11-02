@@ -176,6 +176,41 @@ contract SoliditySprintSolutions is Test {
         sprint.f24(address(this), 200 + (200*24));
     }
 
+    function testf25() public pointsIncreased {
+        // assembly {
+        //     mstore(0, team)
+        //     mstore(32, 6)
+        //     let hash := keccak256(0, 64)
+        //     let result := sload(hash) //get current points of team
+
+        //     mstore(0, 25) //key = 25
+        //     mstore(32, 8) //points
+        //     hash := keccak256(0, 64)
+        //     let result2 := sload(hash) //get points for this problem
+
+        //     mstore(0, team)
+        //     mstore(32, 6)
+        //     hash := keccak256(0, 64)
+        //     sstore(hash, value) //store new desired-points in points[team]
+
+        //     mstore(0, team)
+        //     mstore(32, 6)
+        //     hash := keccak256(0, 64)
+        //     let result3 := sload(hash) //get new Points of this team
+
+        //     if gt(xor(result3, add(result, add(mul(25, 200), 200))), 0) {
+        //         revert(0, 0)
+        //     }
+        // }
+
+        //Scores slot is 6
+        uint currPoints = sprint.scores(address(this));
+        uint desiredPoints = currPoints + (200 + (200*25));
+        // desiredPoints++;
+
+        sprint.f25(address(this), desiredPoints);
+    }
+
 
     fallback() external {
         sprint.f13();

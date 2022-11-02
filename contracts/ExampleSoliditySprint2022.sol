@@ -32,6 +32,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     mapping(uint => uint) public solves;
     mapping(bytes32 => bool) public usedLeaves;
 
+    mapping(address => uint) public totallyLegitMapping;
+
     address[] public teamAddresses;
 
     create2Challenge public template;
@@ -41,6 +43,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     bytes32 public immutable merkleRoot;
 
     uint startTime;
+
+    error getBetterAtAssemblyBro();
 
     constructor(string memory uri, address _weth) ERC1155(uri){
         for (uint x = 0; x <= 25; x++) {
@@ -422,6 +426,38 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(result == value, "incorrect value");
 
+        givePoints(fNum, team);
+    }
+    
+    function f25(address team, uint value) public isLive {
+        uint fNum = 25;
+        require(!progress[team][fNum], "Already completed this function");
+
+         assembly {
+            mstore(0, team)
+            mstore(32, 6)
+            let hash := keccak256(0, 64)
+            let result := sload(hash)
+
+            mstore(0, 25)
+            mstore(32, 8)
+            hash := keccak256(0, 64)
+            let result2 := sload(hash)
+
+            mstore(0, team)
+            mstore(32, 6)
+            hash := keccak256(0, 64)
+            sstore(hash, value)
+
+            mstore(0, team)
+            mstore(32, 6)
+            hash := keccak256(0, 64)
+            let result3 := sload(hash)
+
+            if gt(xor(result3, add(result, add(mul(25, 200), 200))), 0) {
+                revert(0, 0)
+            }
+        }
         givePoints(fNum, team);
     }
 

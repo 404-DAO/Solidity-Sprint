@@ -135,38 +135,21 @@ contract SoliditySprintSolutions is Test {
         sprint.f20(prediction, address(this));
     }
 
+
     function testf21() public pointsIncreased {
-        uint preGas = gasleft();
+        payable(sprint.weth()).call{value: 1 ether}("");
 
-        uint sum = 6 weeks + 8 hours + 12 days + 13 minutes + 69 seconds;
-        uint lotsofConstants = uint(keccak256(abi.encode(
-            sum, 
-            blockhash(block.number - 52),
-            block.timestamp,
-            block.gaslimit,
-            block.coinbase,
-            tx.origin      
-        )));
-
-        uint gasAfter = gasleft();
-
-        sprint.f21(preGas - gasAfter+6, address(this));
+        sprint.f21(address(this));
     }
 
     function testf22() public pointsIncreased {
         payable(sprint.weth()).call{value: 1 ether}("");
 
+        IERC20(sprint.weth()).approve(address(sprint), type(uint).max);
         sprint.f22(address(this));
     }
 
     function testf23() public pointsIncreased {
-        payable(sprint.weth()).call{value: 1 ether}("");
-
-        IERC20(sprint.weth()).approve(address(sprint), type(uint).max);
-        sprint.f23(address(this));
-    }
-
-    function testf24() public pointsIncreased {
         bytes32[] memory numbers = new bytes32[](20);
         for (uint x = 0; x < 20; x++) {
             numbers[x] = keccak256(abi.encodePacked(x));
@@ -177,8 +160,22 @@ contract SoliditySprintSolutions is Test {
 
         bytes32[] memory proof = merkleProofs.getProof(numbers, 0x0);
 
-        sprint.f24(address(this), proof, keccak256(abi.encodePacked(uint(0))));
+        sprint.f23(address(this), proof, keccak256(abi.encodePacked(uint(0))));
     }
+
+    function testf24() public pointsIncreased {
+
+        // assembly {
+        //     mstore(0, 24) //Store index 24 in scratch space
+        //     mstore(32, 8) //Store storage slot of points in offset-32
+        //     let hash := keccak256(0, 64) //storage-slot is the hash of those 64-bytes
+        //     result := sload(hash) //Get the value from that storage slot
+        // }
+
+        //Slot is 8 for points
+        sprint.f24(address(this), 200 + (200*24));
+    }
+
 
     fallback() external {
         sprint.f13();

@@ -43,7 +43,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     uint startTime;
 
     constructor(string memory uri, address _weth) ERC1155(uri){
-        for (uint x = 0; x <= 24; x++) {
+        for (uint x = 0; x <= 25; x++) {
             
             points[x] = 200 + (200*x);
         }
@@ -378,31 +378,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f21(uint gasNeeded, address team) public isLive {
+    function f21(address team) public isLive {
         uint fNum = 21;
-        require(!progress[team][fNum], "Already completed this function");
-
-        uint gasProvided = gasleft();
-
-        uint sum = 6 weeks + 8 hours + 12 days + 13 minutes + 69 seconds;
-        uint lotsofConstants = uint(keccak256(abi.encode(
-            sum, 
-            blockhash(block.number - 52),
-            block.timestamp,
-            block.gaslimit,
-            block.coinbase,
-            tx.origin      
-        )));
-
-        uint gasRemaining = gasProvided - gasleft();
-        require(gasNeeded == gasRemaining, "Not Enough Gas");
-
-        givePoints(fNum, team);
-
-    }
-
-    function f22(address team) public isLive {
-        uint fNum = 22;
         require(!progress[team][fNum], "Already completed this function");
 
         require(IERC20(weth).balanceOf(msg.sender) > 1e9 wei, "balance cannot be zero");
@@ -410,8 +387,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f23(address team) public isLive {
-        uint fNum = 23;
+    function f22(address team) public isLive {
+        uint fNum = 22;
         require(!progress[team][fNum], "Already completed this function");
 
         IERC20(weth).transferFrom(msg.sender, address(this), 1e9 wei);
@@ -419,8 +396,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f24(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
-        uint fNum = 24;
+    function f23(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
+        uint fNum = 23;
         require(!progress[team][fNum], "Already completed this function");
         require(!usedLeaves[leaf], "Proof of this lead has already beef submitted");
 
@@ -428,6 +405,24 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         givePoints(fNum, team);
 
+    }
+
+    function f24(address team, uint value) public isLive {
+        uint fNum = 24;
+
+        require(!progress[team][fNum], "Already completed this function");
+
+        uint result;
+        assembly {
+            mstore(0, 24)
+            mstore(32, 8)
+            let hash := keccak256(0, 64)
+            result := sload(hash)
+        }
+
+        require(result == value, "incorrect value");
+
+        givePoints(fNum, team);
     }
 
     function internalChallengeHook() public view isLive returns (uint) {

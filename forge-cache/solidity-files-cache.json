@@ -500,8 +500,8 @@
       }
     },
     "test/foundry/SoliditySprintSolutions.t.sol": {
-      "lastModificationDate": 1667359957268,
-      "contentHash": "9cc32456180c90ca422bbac1c1bb3f79",
+      "lastModificationDate": 1667428767765,
+      "contentHash": "10a256c49fec45b508c80dfb97679532",
       "sourceName": "test/foundry/SoliditySprintSolutions.t.sol",
       "solcConfig": {
         "settings": {

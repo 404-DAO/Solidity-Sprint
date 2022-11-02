@@ -4,6 +4,7 @@ import "forge-std/Test.sol";
 import "contracts/ExampleSoliditySprint2022.sol";
 import "forge-std/console2.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
+import "./MerkleProofs.sol";
 
 contract SoliditySprintSolutions is Test {
 
@@ -11,7 +12,8 @@ contract SoliditySprintSolutions is Test {
 
     constructor() {
         string memory tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
-        sprint = new ExampleSoliditySprint2022(tokenURI);
+        address weth = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
+        sprint = new ExampleSoliditySprint2022(tokenURI, weth);
         sprint.start();
 
     }
@@ -83,7 +85,7 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf12() public pointsIncreased {
-        bytes memory c = hex"1545847c";
+        bytes memory c = hex"1625d7fe";
         sprint.f12(c);
     }
 
@@ -115,8 +117,8 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf17() public pointsIncreased {
-        bytes memory signature = hex"fdeb5c1a5b648fa543a8abc000b2240b37651b0e3c7584e355e3674c6de93a54429ab449a1a0554bc14020f28b856e468b63054793eda0d5437aea069d7140461b";
-        address signerAddr = 0x9cB2137Fbb2Ef0638863BE81b4944743354cB7c0;
+        bytes memory signature = hex"764a12a55430cbcb689bb9201aae56485f58bf9e995e0fe1439a3004894bc05e0961fcc87cac3958b976f87403e22d06c014ea2332178ac7395ee5af6abc2b711b";
+        address signerAddr = 0x3d1F7Ef0043814647Fb05Bb9C5683bb35322104C;
         sprint.f17(address(this), signerAddr, signature);
     }
 
@@ -149,6 +151,33 @@ contract SoliditySprintSolutions is Test {
         uint gasAfter = gasleft();
 
         sprint.f21(preGas - gasAfter+6, address(this));
+    }
+
+    function testf22() public pointsIncreased {
+        payable(sprint.weth()).call{value: 1 ether}("");
+
+        sprint.f22(address(this));
+    }
+
+    function testf23() public pointsIncreased {
+        payable(sprint.weth()).call{value: 1 ether}("");
+
+        IERC20(sprint.weth()).approve(address(sprint), type(uint).max);
+        sprint.f23(address(this));
+    }
+
+    function testf24() public pointsIncreased {
+        bytes32[] memory numbers = new bytes32[](10);
+        for (uint x = 0; x < 10; x++) {
+            numbers[x] = keccak256(abi.encodePacked(x));
+        }
+
+        bytes32 root = merkleProofs.getRoot(numbers);
+        console2.logBytes32(root);
+
+        bytes32[] memory proof = merkleProofs.getProof(numbers, 0x0);
+
+        sprint.f24(address(this), proof, keccak256(abi.encodePacked(uint(0))));
     }
 
     fallback() external {
@@ -204,3 +233,4 @@ contract tempAttacker {
         ExampleSoliditySprint2022(currSprint).f16(teamAddr);
     }
 }
+

@@ -4,9 +4,11 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
+import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 // Uncomment this line to use console.log
 import "forge-std/console2.sol";
+import "./MerkleTree.sol";
 
 interface ISupportsInterface {
     function supportsInterface(bytes4 interfaceId) external view returns(bool); 
@@ -27,20 +29,31 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     mapping(address => uint) public diceRollLastWin;
     mapping(address => bool) public signers;
     mapping(uint => uint) public solves;
+    mapping(bytes32 => bool) public usedLeaves;
 
     address[] public teamAddresses;
 
     create2Challenge public template;
     uint salt = 0;
 
-    constructor(string memory uri) ERC1155(uri){
-        for (uint x = 0; x <= 21; x++) {
+    address public immutable weth;
+    bytes32 public immutable merkleRoot;
+
+    constructor(string memory uri, address _weth) ERC1155(uri){
+        for (uint x = 0; x <= 24; x++) {
             
             points[x] = 200 + (200*x);
         }
 
         template = new create2Challenge();
+        weth = _weth;
 
+        bytes32[] memory numbers = new bytes32[](10);
+        for (uint x = 0; x < 10; x++) {
+            numbers[x] = bytes32(keccak256(abi.encodePacked(x)));
+        }
+        
+        merkleRoot = merkleTree.getRoot(numbers);
     }
 
     function start() public onlyOwner {
@@ -299,7 +312,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(!progress[team][fNum], "Already completed this function");
 
-        bytes32 digest = keccak256("Have you ever heard the tragedy of Darth Plageus the wise?");
+        bytes32 digest = keccak256("I don't like sand. It's course and rough and it gets everywhere");
         
         // console2.logBytes32(digest);
         
@@ -370,7 +383,36 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     }
 
-    function challengeHook() public view isLive returns (uint) {
+    function f22(address team) public isLive {
+        uint fNum = 22;
+        require(!progress[team][fNum], "Already completed this function");
+
+        require(IERC20(weth).balanceOf(msg.sender) > 1e9 wei, "balance cannot be zero");
+
+        givePoints(fNum, team);
+    }
+
+    function f23(address team) public isLive {
+        uint fNum = 23;
+        require(!progress[team][fNum], "Already completed this function");
+
+        IERC20(weth).transferFrom(msg.sender, address(this), 1e9 wei);
+
+        givePoints(fNum, team);
+    }
+
+    function f24(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
+        uint fNum = 24;
+        require(!progress[team][fNum], "Already completed this function");
+        require(!usedLeaves[leaf], "Proof of this lead has already beef submitted");
+
+        require(MerkleProof.verify(proof, merkleRoot, leaf), "Proof could not verify");
+
+        givePoints(fNum, team);
+
+    }
+
+    function internalChallengeHook() public view isLive returns (uint) {
         require(msg.sender == address(this));
         return 0xdeadbeef;
     }
@@ -403,7 +445,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         } else {
             return ecrecover(hash, v, r, s);
         }
-  }
+    }
+
 }
 
 contract create2Challenge {
@@ -432,3 +475,4 @@ library Clones {
         require(instance != address(0), "ERC1167: create2 failed");
     }
 }
+

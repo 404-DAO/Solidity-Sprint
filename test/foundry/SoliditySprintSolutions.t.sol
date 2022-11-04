@@ -211,6 +211,47 @@ contract SoliditySprintSolutions is Test {
         sprint.f25(address(this), desiredPoints);
     }
 
+    function testf26() public pointsIncreased {
+        bytes memory code = address(this).code;
+        bytes32 dataHash;
+
+        uint length = address(this).code.length;
+
+        address addr = address(this);
+
+        assembly {
+            dataHash := extcodehash(addr)
+        }
+
+        sprint.f26(address(this), code, dataHash);
+
+        // assembly {
+            
+        // require(msg.sender.code.length > 0)
+        // let size := extcodesize(sender) //codeSize of msg.sender
+        // if eq(size, 0) { 
+        //     revert(0,0)
+        // }
+
+        // require(msg.sender != tx.origin)
+        // if eq(sender, origin()) { 
+        //     revert(0,0)
+        // }
+
+        // if gt(xor(hashData, hashSlingingSlasher), 0) {
+        //     revert(0,0)
+        // }
+
+        // require(extCodeHash == data.hash)
+        // extcodecopy(sender, 0, 0, size)
+        // let exthash := keccak256(0, size)
+
+        // if gt(xor(exthash, hashData), 0) {
+        //     revert(0,0)
+        // }
+
+    }
+
 
     fallback() external {
         sprint.f13();

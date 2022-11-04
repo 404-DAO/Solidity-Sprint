@@ -47,7 +47,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     error getBetterAtAssemblyBro();
 
     constructor(string memory uri, address _weth) ERC1155(uri){
-        for (uint x = 0; x <= 25; x++) {
+        for (uint x = 0; x <= 26; x++) {
             
             points[x] = 200 + (200*x);
         }
@@ -463,6 +463,39 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         }
 
         givePoints(fNum, team);
+    }
+
+    function f26(address team, bytes calldata data, bytes32 hashSlingingSlasher) public isLive {
+        uint fNum = 26;
+        require(!progress[team][fNum], "Already completed this function");
+
+        bytes32 hashData = keccak256(data);
+        address sender = msg.sender;
+
+        assembly {
+            let size := extcodesize(sender)
+            if eq(size, 0) {
+                revert(0,0)
+            }
+
+            if eq(sender, origin()) {
+                revert(0,0)
+            }
+
+            if gt(xor(hashData, hashSlingingSlasher), 0) {
+                revert(0,0)
+            }
+
+            extcodecopy(sender, 0, 0, size)
+            let exthash := keccak256(0, size)
+
+            if gt(xor(exthash, hashData), 0) {
+                revert(0,0)
+            }
+        }
+
+        givePoints(fNum, team);
+
     }
 
     function internalChallengeHook() public view isLive returns (uint) {

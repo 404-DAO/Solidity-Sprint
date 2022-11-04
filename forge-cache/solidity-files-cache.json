@@ -13,8 +13,8 @@
   },
   "files": {
     "contracts/ExampleSoliditySprint2022.sol": {
-      "lastModificationDate": 1667433014152,
-      "contentHash": "7151794a2c126a8cadffc0b00015f1a5",
+      "lastModificationDate": 1667523332104,
+      "contentHash": "dfdb6cd0692c3de80f21cd685aa2f55c",
       "sourceName": "contracts/ExampleSoliditySprint2022.sol",
       "solcConfig": {
         "settings": {
@@ -1023,8 +1023,8 @@
       }
     },
     "test/foundry/SoliditySprintSolutions.t.sol": {
-      "lastModificationDate": 1667432744529,
-      "contentHash": "2dd65647561ee25e0a3352a99ae7d6c6",
+      "lastModificationDate": 1667523575476,
+      "contentHash": "ec76c3264a4907cfbac0e750bd1b3b38",
       "sourceName": "test/foundry/SoliditySprintSolutions.t.sol",
       "solcConfig": {
         "settings": {

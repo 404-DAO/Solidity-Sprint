@@ -98,20 +98,11 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
 
         progress[team][challengeNum] = true;
 
-        if (challengeNum != 25) {
-            scores[team] += points[challengeNum];
-        }
-
-        if (solves[challengeNum] == 0) {
-            scores[team] += 5;
-        }
-
-        if (challengeNum >= 9) {
-            points[challengeNum] /= 2;
+        if (challengeNum != 22) {
+            scores[team] += (points[challengeNum] - solves[challengeNum]);
         }
 
         solves[challengeNum]++;
-
 
     }
 

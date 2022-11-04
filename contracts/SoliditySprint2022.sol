@@ -95,7 +95,6 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
     }
 
     function givePoints(uint challengeNum, address team) internal {
-        solves[challengeNum]++;
 
         progress[team][challengeNum] = true;
 
@@ -110,6 +109,9 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
         if (challengeNum >= 9) {
             points[challengeNum] /= 2;
         }
+
+        solves[challengeNum]++;
+
 
     }
 

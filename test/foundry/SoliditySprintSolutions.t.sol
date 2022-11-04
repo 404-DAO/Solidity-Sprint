@@ -150,7 +150,7 @@ contract SoliditySprintSolutions is Test {
         // }
 
         //Slot is 8 for points
-        sprint.f21(address(this), 200 + (200*24));
+        sprint.f21(address(this), 200 + (200*21));
     }
 
     function testf22() public pointsIncreased {
@@ -271,7 +271,7 @@ contract tempAttacker {
     constructor(address _teamAddr, address _currSprint) {
         teamAddr = _teamAddr;
         currSprint = _currSprint;
-        SoliditySprint2022(currSprint).f16(teamAddr);
+        SoliditySprint2022(currSprint).f13(teamAddr);
     }
 
     fallback() external {

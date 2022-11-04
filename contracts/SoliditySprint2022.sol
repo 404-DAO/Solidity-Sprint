@@ -111,8 +111,6 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
             points[challengeNum] /= 2;
         }
 
-        solves[challengeNum]++;
-
     }
 
     function f0(bool val) public isLive {
@@ -369,7 +367,7 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
 
         uint result;
         assembly {
-            mstore(0, 24)
+            mstore(0, 21)
             mstore(32, 8)
             let hash := keccak256(0, 64)
             result := sload(hash)

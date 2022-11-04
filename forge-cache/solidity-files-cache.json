@@ -12,110 +12,8 @@
     ]
   },
   "files": {
-    "contracts/ExampleSoliditySprint2022.sol": {
-      "lastModificationDate": 1667523332104,
-      "contentHash": "dfdb6cd0692c3de80f21cd685aa2f55c",
-      "sourceName": "contracts/ExampleSoliditySprint2022.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "contracts/MerkleTree.sol",
-        "lib/forge-std/src/console2.sol",
-        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
-        "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "node_modules/@openzeppelin/contracts/utils/Address.sol",
-        "node_modules/@openzeppelin/contracts/utils/Context.sol",
-        "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.9",
-      "artifacts": {
-        "Clones": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ExampleSoliditySprint2022.sol/Clones.json"
-        },
-        "ExampleSoliditySprint2022": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ExampleSoliditySprint2022.sol/ExampleSoliditySprint2022.json"
-        },
-        "ISupportsInterface": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ExampleSoliditySprint2022.sol/ISupportsInterface.json"
-        },
-        "create2Challenge": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ExampleSoliditySprint2022.sol/create2Challenge.json"
-        }
-      }
-    },
-    "contracts/MerkleTree.sol": {
-      "lastModificationDate": 1667430013668,
-      "contentHash": "4973d40d1773442efd038c221189e13b",
-      "sourceName": "contracts/MerkleTree.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.9",
-      "artifacts": {
-        "merkleTree": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "MerkleTree.sol/merkleTree.json"
-        }
-      }
-    },
     "lib/forge-std/lib/ds-test/src/test.sol": {
-      "lastModificationDate": 1667184118164,
+      "lastModificationDate": 1667167390853,
       "contentHash": "962996f0e05d5218857a538a62d7c47e",
       "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
       "solcConfig": {
@@ -136,8 +34,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -149,12 +46,12 @@
       "versionRequirement": ">=0.5.0",
       "artifacts": {
         "DSTest": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "test.sol/DSTest.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "test.sol/DSTest.json"
         }
       }
     },
     "lib/forge-std/src/Script.sol": {
-      "lastModificationDate": 1667184117612,
+      "lastModificationDate": 1667167390601,
       "contentHash": "571dde8775a6214a03d6772ee330ead5",
       "sourceName": "lib/forge-std/src/Script.sol",
       "solcConfig": {
@@ -175,8 +72,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -193,12 +89,12 @@
       "versionRequirement": ">=0.6.0, <0.9.0",
       "artifacts": {
         "Script": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Script.sol/Script.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Script.sol/Script.json"
         }
       }
     },
     "lib/forge-std/src/StdJson.sol": {
-      "lastModificationDate": 1667184117612,
+      "lastModificationDate": 1667167390601,
       "contentHash": "75c782f20a301ab9827060a03da071e4",
       "sourceName": "lib/forge-std/src/StdJson.sol",
       "solcConfig": {
@@ -219,8 +115,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -234,12 +129,12 @@
       "versionRequirement": ">=0.6.0, <0.9.0",
       "artifacts": {
         "stdJson": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "StdJson.sol/stdJson.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "StdJson.sol/stdJson.json"
         }
       }
     },
     "lib/forge-std/src/Test.sol": {
-      "lastModificationDate": 1667184117612,
+      "lastModificationDate": 1667167390601,
       "contentHash": "6cab65c53a9548c2428a10697fd06dd1",
       "sourceName": "lib/forge-std/src/Test.sol",
       "solcConfig": {
@@ -260,8 +155,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -280,21 +174,21 @@
       "versionRequirement": ">=0.6.0, <0.9.0",
       "artifacts": {
         "Test": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/Test.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/Test.json"
         },
         "stdError": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdError.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdError.json"
         },
         "stdMath": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdMath.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdMath.json"
         },
         "stdStorage": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Test.sol/stdStorage.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdStorage.json"
         }
       }
     },
     "lib/forge-std/src/Vm.sol": {
-      "lastModificationDate": 1667184117613,
+      "lastModificationDate": 1667167390601,
       "contentHash": "bd4bde818b3c57b21e0601277b1d2dac",
       "sourceName": "lib/forge-std/src/Vm.sol",
       "solcConfig": {
@@ -315,8 +209,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -328,12 +221,12 @@
       "versionRequirement": ">=0.6.0, <0.9.0",
       "artifacts": {
         "Vm": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Vm.sol/Vm.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Vm.sol/Vm.json"
         }
       }
     },
     "lib/forge-std/src/console.sol": {
-      "lastModificationDate": 1667184117613,
+      "lastModificationDate": 1667167390601,
       "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
       "sourceName": "lib/forge-std/src/console.sol",
       "solcConfig": {
@@ -354,8 +247,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -367,12 +259,12 @@
       "versionRequirement": ">=0.4.22, <0.9.0",
       "artifacts": {
         "console": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "console.sol/console.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "console.sol/console.json"
         }
       }
     },
     "lib/forge-std/src/console2.sol": {
-      "lastModificationDate": 1667184117613,
+      "lastModificationDate": 1667167390601,
       "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
       "sourceName": "lib/forge-std/src/console2.sol",
       "solcConfig": {
@@ -393,8 +285,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -406,53 +297,12 @@
       "versionRequirement": ">=0.4.22, <0.9.0",
       "artifacts": {
         "console2": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "console2.sol/console2.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1667184131630,
-      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
-      "sourceName": "node_modules/@openzeppelin/contracts/access/Ownable.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/utils/Context.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "Ownable": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Ownable.sol/Ownable.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "console2.sol/console2.json"
         }
       }
     },
     "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1667184131563,
+      "lastModificationDate": 1667167333662,
       "contentHash": "d151fbfe7939989b9acf22797b32058b",
       "sourceName": "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
       "solcConfig": {
@@ -473,8 +323,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -488,183 +337,12 @@
       "versionRequirement": "^0.8.0",
       "artifacts": {
         "IERC20": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "interfaces/IERC20.sol/IERC20.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
-      "lastModificationDate": 1667184131129,
-      "contentHash": "9be05ac5a08ad0370e3cc36665ca490c",
-      "sourceName": "node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-        "node_modules/@openzeppelin/contracts/utils/Address.sol",
-        "node_modules/@openzeppelin/contracts/utils/Context.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "ERC1155": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC1155.sol/ERC1155.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1667184131547,
-      "contentHash": "d5a8f6e07ca38ec384856cfe9f08a867",
-      "sourceName": "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "IERC1155": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC1155.sol/IERC1155.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1667184131551,
-      "contentHash": "9f8822b72fe2702979e40160cb6d9636",
-      "sourceName": "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "IERC1155Receiver": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC1155Receiver.sol/IERC1155Receiver.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1667184131549,
-      "contentHash": "9148c2e10c4efb12c71a7f080da5559b",
-      "sourceName": "node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "IERC1155MetadataURI": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC1155MetadataURI.sol/IERC1155MetadataURI.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "IERC20.sol/IERC20.json"
         }
       }
     },
     "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1667184131564,
+      "lastModificationDate": 1667167333662,
       "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
       "sourceName": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -685,8 +363,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -698,209 +375,12 @@
       "versionRequirement": "^0.8.0",
       "artifacts": {
         "IERC20": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC20.sol/IERC20.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1667184131024,
-      "contentHash": "c476b3895a94798b88a4bb97399e6dfe",
-      "sourceName": "node_modules/@openzeppelin/contracts/utils/Address.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.1",
-      "artifacts": {
-        "Address": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Address.sol/Address.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1667184131057,
-      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
-      "sourceName": "node_modules/@openzeppelin/contracts/utils/Context.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "Context": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Context.sol/Context.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol": {
-      "lastModificationDate": 1667184131624,
-      "contentHash": "04d20a7656ab3b219a40d6dad3669ab5",
-      "sourceName": "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "MerkleProof": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "MerkleProof.sol/MerkleProof.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1667184131201,
-      "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
-      "sourceName": "node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol"
-      ],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "ERC165": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "ERC165.sol/ERC165.json"
-        }
-      }
-    },
-    "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1667184131559,
-      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
-      "sourceName": "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": "^0.8.0",
-      "artifacts": {
-        "IERC165": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "IERC165.sol/IERC165.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "IERC20.sol/IERC20.json"
         }
       }
     },
     "script/Contract.s.sol": {
-      "lastModificationDate": 1667183905427,
+      "lastModificationDate": 1667167390169,
       "contentHash": "3642d05d9c479368231825c40aaa276a",
       "sourceName": "script/Contract.s.sol",
       "solcConfig": {
@@ -921,8 +401,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -940,12 +419,12 @@
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "ContractScript": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Contract.s.sol/ContractScript.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Contract.s.sol/ContractScript.json"
         }
       }
     },
     "src/Contract.sol": {
-      "lastModificationDate": 1667183905428,
+      "lastModificationDate": 1667167390169,
       "contentHash": "0a4db02f64172ef6ba21d89f49444a92",
       "sourceName": "src/Contract.sol",
       "solcConfig": {
@@ -966,8 +445,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -979,12 +457,12 @@
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "Contract": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "Contract.sol/Contract.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "Contract.sol/Contract.json"
         }
       }
     },
     "test/foundry/MerkleProofs.sol": {
-      "lastModificationDate": 1667430013743,
+      "lastModificationDate": 1667356250228,
       "contentHash": "470a1733705cb3b1392f6826b773dd06",
       "sourceName": "test/foundry/MerkleProofs.sol",
       "solcConfig": {
@@ -1005,8 +483,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -1018,12 +495,12 @@
       "versionRequirement": "^0.8.9",
       "artifacts": {
         "merkleProofs": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "MerkleProofs.sol/merkleProofs.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "MerkleProofs.sol/merkleProofs.json"
         }
       }
     },
     "test/foundry/SoliditySprintSolutions.t.sol": {
-      "lastModificationDate": 1667523575476,
+      "lastModificationDate": 1667532762149,
       "contentHash": "ec76c3264a4907cfbac0e750bd1b3b38",
       "sourceName": "test/foundry/SoliditySprintSolutions.t.sol",
       "solcConfig": {
@@ -1044,8 +521,7 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
+                "evm.methodIdentifiers"
               ]
             }
           },
@@ -1054,8 +530,6 @@
         }
       },
       "imports": [
-        "contracts/ExampleSoliditySprint2022.sol",
-        "contracts/MerkleTree.sol",
         "lib/forge-std/lib/ds-test/src/test.sol",
         "lib/forge-std/src/Script.sol",
         "lib/forge-std/src/StdJson.sol",
@@ -1063,27 +537,17 @@
         "lib/forge-std/src/Vm.sol",
         "lib/forge-std/src/console.sol",
         "lib/forge-std/src/console2.sol",
-        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
         "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
-        "node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
         "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "node_modules/@openzeppelin/contracts/utils/Address.sol",
-        "node_modules/@openzeppelin/contracts/utils/Context.sol",
-        "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol",
-        "node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol",
         "test/foundry/MerkleProofs.sol"
       ],
       "versionRequirement": null,
       "artifacts": {
         "SoliditySprintSolutions": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "SoliditySprintSolutions.t.sol/SoliditySprintSolutions.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "SoliditySprintSolutions.t.sol/SoliditySprintSolutions.json"
         },
         "tempAttacker": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "SoliditySprintSolutions.t.sol/tempAttacker.json"
+          "0.8.13+commit.abaa5c0e.Linux.gcc": "SoliditySprintSolutions.t.sol/tempAttacker.json"
         }
       }
     }

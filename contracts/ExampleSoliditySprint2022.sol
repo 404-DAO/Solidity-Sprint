@@ -410,7 +410,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
         require(MerkleProof.verify(proof, merkleRoot, leaf), "Proof could not verify");
 
-        usedLeaves[left] = true;
+        usedLeaves[leaf] = true;
 
         givePoints(fNum, team);
 

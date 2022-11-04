@@ -1,19 +1,19 @@
 pragma solidity >= 0.8.5;
 
 import "forge-std/Test.sol";
-import "contracts/ExampleSoliditySprint2022.sol";
+import "contracts/SoliditySprint2022.sol";
 import "forge-std/console2.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "./MerkleProofs.sol";
 
 contract SoliditySprintSolutions is Test {
 
-    ExampleSoliditySprint2022 sprint;
+    SoliditySprint2022 sprint;
 
     constructor() {
         string memory tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
         address weth = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-        sprint = new ExampleSoliditySprint2022(tokenURI, weth);
+        sprint = new SoliditySprint2022(tokenURI, weth);
         sprint.start();
 
     }
@@ -90,66 +90,43 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf13() public pointsIncreased {
-        sprint.f13();
-    }
-
-    function testf14() public pointsIncreased {
-
-         uint scoreBefore = sprint.scores(address(this));
-        for(uint x = 0; x < 5; x++) {
-            uint expectedOutcome = uint(keccak256(abi.encodePacked(block.timestamp, address(this), block.number)));
-            sprint.f14(expectedOutcome % 6);
-            skip(5);
-        }
-
-        uint scoreAfter = sprint.scores(address(this));
-        require(scoreAfter > scoreBefore, "score did not increase keep going");
-       
-    }
-
-    function testf15() public pointsIncreased {
-        uint difficulty = uint(keccak256(abi.encode(block.difficulty)));
-        sprint.f15(difficulty);
-    }
-
-    function testf16() public pointsIncreased {
         new tempAttacker(address(this), address(sprint));
     }
 
-    function testf17() public pointsIncreased {
+    function testf14() public pointsIncreased {
         bytes memory signature = hex"764a12a55430cbcb689bb9201aae56485f58bf9e995e0fe1439a3004894bc05e0961fcc87cac3958b976f87403e22d06c014ea2332178ac7395ee5af6abc2b711b";
         address signerAddr = 0x3d1F7Ef0043814647Fb05Bb9C5683bb35322104C;
-        sprint.f17(address(this), signerAddr, signature);
+        sprint.f14(address(this), signerAddr, signature);
     }
 
+    function testf15() public pointsIncreased {
+        sprint.f15(5, address(this), address(this));
+    }
+
+    function testf16() public pointsIncreased {
+        sprint.f16(address(this));
+    }
+
+    function testf17() public pointsIncreased {
+        address prediction = predictDeterministicAddress(address(sprint.template()), keccak256(abi.encode(address(this))), address(sprint));
+        sprint.f17(prediction, address(this));
+    }
+
+
     function testf18() public pointsIncreased {
-        sprint.f18(5, address(this), address(this));
+        payable(sprint.weth()).call{value: 1 ether}("");
+
+        sprint.f18(address(this));
     }
 
     function testf19() public pointsIncreased {
+        payable(sprint.weth()).call{value: 1 ether}("");
+
+        IERC20(sprint.weth()).approve(address(sprint), type(uint).max);
         sprint.f19(address(this));
     }
 
     function testf20() public pointsIncreased {
-        address prediction = predictDeterministicAddress(address(sprint.template()), keccak256(abi.encode(address(this))), address(sprint));
-        sprint.f20(prediction, address(this));
-    }
-
-
-    function testf21() public pointsIncreased {
-        payable(sprint.weth()).call{value: 1 ether}("");
-
-        sprint.f21(address(this));
-    }
-
-    function testf22() public pointsIncreased {
-        payable(sprint.weth()).call{value: 1 ether}("");
-
-        IERC20(sprint.weth()).approve(address(sprint), type(uint).max);
-        sprint.f22(address(this));
-    }
-
-    function testf23() public pointsIncreased {
         bytes32[] memory numbers = new bytes32[](20);
         for (uint x = 0; x < 20; x++) {
             numbers[x] = keccak256(abi.encodePacked(x));
@@ -160,10 +137,10 @@ contract SoliditySprintSolutions is Test {
 
         bytes32[] memory proof = merkleProofs.getProof(numbers, 0x0);
 
-        sprint.f23(address(this), proof, keccak256(abi.encodePacked(uint(0))));
+        sprint.f20(address(this), proof, keccak256(abi.encodePacked(uint(0))));
     }
 
-    function testf24() public pointsIncreased {
+    function testf21() public pointsIncreased {
 
         // assembly {
         //     mstore(0, 24) //Store index 24 in scratch space
@@ -173,10 +150,10 @@ contract SoliditySprintSolutions is Test {
         // }
 
         //Slot is 8 for points
-        sprint.f24(address(this), 200 + (200*24));
+        sprint.f21(address(this), 200 + (200*24));
     }
 
-    function testf25() public pointsIncreased {
+    function testf22() public pointsIncreased {
         // assembly {
         //     mstore(0, team)
         //     mstore(32, 6)
@@ -208,10 +185,10 @@ contract SoliditySprintSolutions is Test {
         uint desiredPoints = currPoints + (200 + (200*25));
         // desiredPoints++;
 
-        sprint.f25(address(this), desiredPoints);
+        sprint.f22(address(this), desiredPoints);
     }
 
-    function testf26() public pointsIncreased {
+    function testf23() public pointsIncreased {
         bytes memory code = address(this).code;
         bytes32 dataHash;
 
@@ -223,7 +200,7 @@ contract SoliditySprintSolutions is Test {
             dataHash := extcodehash(addr)
         }
 
-        sprint.f26(address(this), code, dataHash);
+        sprint.f23(address(this), code, dataHash);
 
         // assembly {
             
@@ -250,11 +227,6 @@ contract SoliditySprintSolutions is Test {
         //     revert(0,0)
         // }
 
-    }
-
-
-    fallback() external {
-        sprint.f13();
     }
 
     function onERC1155Received(
@@ -299,11 +271,11 @@ contract tempAttacker {
     constructor(address _teamAddr, address _currSprint) {
         teamAddr = _teamAddr;
         currSprint = _currSprint;
-        ExampleSoliditySprint2022(currSprint).f16(teamAddr);
+        SoliditySprint2022(currSprint).f16(teamAddr);
     }
 
     fallback() external {
-        ExampleSoliditySprint2022(currSprint).f16(teamAddr);
+        SoliditySprint2022(currSprint).f16(teamAddr);
     }
 }
 

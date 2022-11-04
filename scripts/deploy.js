@@ -11,13 +11,13 @@ async function main() {
 
   const tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
 
-  const Sprint = await hre.ethers.getContractFactory("ExampleSoliditySprint2022");
+  const Sprint = await hre.ethers.getContractFactory("SoliditySprint2022");
   const sprint = await Sprint.deploy(tokenURI);
 
   await sprint.deployed();
 
   console.log(
-    `\nExampleSoliditySprint2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
+    `\nSoliditySprint2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
   );
 
   console.log("Verifying on Etherscan");

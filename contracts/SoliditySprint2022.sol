@@ -14,7 +14,7 @@ interface ISupportsInterface {
     function supportsInterface(bytes4 interfaceId) external view returns(bool); 
 }
 
-contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
+contract SoliditySprint2022 is Ownable, ERC1155  {
 
     bool public live;
     bool public timeExtended = false;
@@ -25,9 +25,6 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     mapping(uint => uint) public points;
 
     mapping(address => uint) public entryCount;
-    mapping(address => uint) public secondEntryCount;
-    mapping(address => uint) public diceRollWins;
-    mapping(address => uint) public diceRollLastWin;
     mapping(address => bool) public signers;
     mapping(uint => uint) public solves;
     mapping(bytes32 => bool) public usedLeaves;
@@ -47,7 +44,7 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
     error getBetterAtAssemblyBro();
 
     constructor(string memory uri, address _weth) ERC1155(uri){
-        for (uint x = 0; x <= 26; x++) {
+        for (uint x = 0; x <= 23; x++) {
             
             points[x] = 200 + (200*x);
         }
@@ -265,66 +262,15 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, msg.sender);
     }
 
-    function f13() public payable isLive {
+    function f13(address team) public isLive {
         uint fNum = 13;
-
-        require(!progress[msg.sender][fNum], "Already completed this function");
-
-
-        if (entryCount[msg.sender] <= 10) {
-            entryCount[msg.sender]++;
-            (bool sent, ) = msg.sender.call("");
-            require(sent, "value send failed");
-        }
-
-        givePoints(fNum, msg.sender);
-
-    }
-
-    function f14(uint diceRoll) public payable isLive {
-        uint fNum = 14;
-
-        require(!progress[msg.sender][fNum], "Already completed this function");
-
-        require(block.timestamp > diceRollLastWin[msg.sender], "cannot play multiple times in same tx");
-
-        uint badRandomness = uint(keccak256(abi.encodePacked(block.timestamp, msg.sender, block.number)));
-
-        uint outcome = badRandomness % 6;
-
-        if (diceRoll != outcome) {
-            diceRollWins[msg.sender] = 0;
-            revert("Gotta steal time from the faulty plan");
-        }
-
-        diceRollWins[msg.sender]++;
-        diceRollLastWin[msg.sender] = block.timestamp;
-
-        if (diceRollWins[msg.sender] == 5) {
-            givePoints(fNum, msg.sender);
-        }
-    }
-
-    function f15(uint difficulty) public isLive {
-        uint fNum = 15;
-
-        require(!progress[msg.sender][fNum], "Already completed this function");
-
-        require(difficulty == uint(keccak256(abi.encode(block.difficulty))), "Did I make this challenge too difficult?");
-
-        givePoints(fNum, msg.sender);
-
-    }
-
-    function f16(address team) public isLive {
-        uint fNum = 16;
 
         require(!progress[team][fNum], "Already completed this function");
 
         require(msg.sender.code.length == 0, "No contracts this time!");
 
-        if (secondEntryCount[team] == 0) {
-            secondEntryCount[team]++;
+        if (entryCount[team] == 0) {
+            entryCount[team]++;
             (bool sent, ) = msg.sender.call("");
             require(sent, "external call failed");
         }
@@ -332,8 +278,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f17(address team, address expectedSigner, bytes memory signature) external isLive {
-        uint fNum = 17;
+    function f14(address team, address expectedSigner, bytes memory signature) external isLive {
+        uint fNum = 14;
 
         require(!progress[team][fNum], "Already completed this function");
 
@@ -353,8 +299,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f18(uint amount, address dest, address team) public isLive {
-        uint fNum = 18;
+    function f15(uint amount, address dest, address team) public isLive {
+        uint fNum = 15;
         require(!progress[team][fNum], "Already completed this function");
 
         require(msg.sender.code.length > 0 && tx.origin != msg.sender, "Must be contract");
@@ -366,8 +312,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f19(address team) public isLive {
-        uint fNum = 19;
+    function f16(address team) public isLive {
+        uint fNum = 16;
         require(!progress[team][fNum], "Already completed this function");
 
         require(ISupportsInterface(msg.sender).supportsInterface(type(IERC20).interfaceId), "msg sender does not support interface");
@@ -375,8 +321,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f20(address newContract, address team) public isLive {
-        uint fNum = 20;
+    function f17(address newContract, address team) public isLive {
+        uint fNum = 17;
         require(!progress[team][fNum], "Already completed this function");
 
         address clone = Clones.cloneDeterministic(address(template), keccak256(abi.encode(msg.sender)));
@@ -385,8 +331,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f21(address team) public isLive {
-        uint fNum = 21;
+    function f18(address team) public isLive {
+        uint fNum = 18;
         require(!progress[team][fNum], "Already completed this function");
 
         require(IERC20(weth).balanceOf(msg.sender) > 1e9 wei, "balance cannot be zero");
@@ -394,8 +340,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f22(address team) public isLive {
-        uint fNum = 22;
+    function f19(address team) public isLive {
+        uint fNum = 19;
         require(!progress[team][fNum], "Already completed this function");
 
         IERC20(weth).transferFrom(msg.sender, address(this), 1e9 wei);
@@ -403,8 +349,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f23(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
-        uint fNum = 23;
+    function f20(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
+        uint fNum = 20;
         require(!progress[team][fNum], "Already completed this function");
         require(!usedLeaves[leaf], "Proof of this lead has already beef submitted");
 
@@ -416,8 +362,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
 
     }
 
-    function f24(address team, uint value) public isLive {
-        uint fNum = 24;
+    function f21(address team, uint value) public isLive {
+        uint fNum = 21;
 
         require(!progress[team][fNum], "Already completed this function");
 
@@ -434,8 +380,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
     
-    function f25(address team, uint value) public isLive {
-        uint fNum = 25;
+    function f22(address team, uint value) public isLive {
+        uint fNum = 22;
         require(!progress[team][fNum], "Already completed this function");
 
          assembly {
@@ -467,8 +413,8 @@ contract ExampleSoliditySprint2022 is Ownable, ERC1155  {
         givePoints(fNum, team);
     }
 
-    function f26(address team, bytes calldata data, bytes32 hashSlingingSlasher) public isLive {
-        uint fNum = 26;
+    function f23(address team, bytes calldata data, bytes32 hashSlingingSlasher) public isLive {
+        uint fNum = 23;
         require(!progress[team][fNum], "Already completed this function");
 
         bytes32 hashData = keccak256(data);

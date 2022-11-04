@@ -20,12 +20,12 @@ async function main() {
     `\nSoliditySprint2022 deployed to ${sprint.address} address on ${hre.network.name} network!\n`
   );
 
-  console.log("Verifying on Etherscan");
+  // console.log("Verifying on Etherscan");
 
-  await run("verify:verify", {
-    address: sprint.address,
-    constructorArguments: [tokenURI],
-  })
+  // await run("verify:verify", {
+  //   address: sprint.address,
+  //   constructorArguments: [tokenURI],
+  // })
 
 }
 

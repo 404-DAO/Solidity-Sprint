@@ -34,7 +34,7 @@ contract SoliditySprint2022 is Ownable {
     address public immutable weth;
     bytes32 public immutable merkleRoot;
 
-    uint startTime;
+    uint public startTime;
 
     event registration(string indexed name, address indexed teamAddr);
 

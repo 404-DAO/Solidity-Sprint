@@ -11,11 +11,9 @@ contract SoliditySprintSolutions is Test {
     SoliditySprint2022 sprint;
 
     constructor() {
-        string memory tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
         address weth = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-        sprint = new SoliditySprint2022(tokenURI, weth);
+        sprint = new SoliditySprint2022(weth);
         sprint.start();
-
     }
 
     modifier pointsIncreased {
@@ -94,13 +92,13 @@ contract SoliditySprintSolutions is Test {
     }
 
     function testf14() public pointsIncreased {
-        bytes memory signature = hex"764a12a55430cbcb689bb9201aae56485f58bf9e995e0fe1439a3004894bc05e0961fcc87cac3958b976f87403e22d06c014ea2332178ac7395ee5af6abc2b711b";
-        address signerAddr = 0x3d1F7Ef0043814647Fb05Bb9C5683bb35322104C;
-        sprint.f14(address(this), signerAddr, signature);
+        new tempAttacker(address(this), address(sprint));
     }
 
     function testf15() public pointsIncreased {
-        sprint.f15(5, address(this), address(this));
+        bytes memory signature = hex"764a12a55430cbcb689bb9201aae56485f58bf9e995e0fe1439a3004894bc05e0961fcc87cac3958b976f87403e22d06c014ea2332178ac7395ee5af6abc2b711b";
+        address signerAddr = 0x3d1F7Ef0043814647Fb05Bb9C5683bb35322104C;
+        sprint.f15(address(this), signerAddr, signature);
     }
 
     function testf16() public pointsIncreased {
@@ -150,11 +148,52 @@ contract SoliditySprintSolutions is Test {
         // }
 
         //Slot is 8 for points
-        sprint.f21(address(this), 200 + (200*21));
+        uint points = sprint.scores(address(this));
+        sprint.f21(address(this), points);
     }
 
     function testf22() public pointsIncreased {
+        bytes memory code = address(this).code;
+        bytes32 dataHash;
+
+        address addr = address(this);
+
+        assembly {
+            dataHash := extcodehash(addr)
+        }
+
+        sprint.f22(address(this), code, dataHash);
+
         // assembly {
+            
+        // require(msg.sender.code.length > 0)
+        // let size := extcodesize(sender) //codeSize of msg.sender
+        // if eq(size, 0) { 
+        //     revert(0,0)
+        // }
+
+        // require(msg.sender != tx.origin)
+        // if eq(sender, origin()) { 
+        //     revert(0,0)
+        // }
+
+        // if gt(xor(hashData, hashSlingingSlasher), 0) {
+        //     revert(0,0)
+        // }
+
+        // require(extCodeHash == data.hash)
+        // extcodecopy(sender, 0, 0, size)
+        // let exthash := keccak256(0, size)
+
+        // if gt(xor(exthash, hashData), 0) {
+        //     revert(0,0)
+        // }
+    }
+
+    function testf23() public pointsIncreased {
+
+
+              // assembly {
         //     mstore(0, team)
         //     mstore(32, 6)
         //     let hash := keccak256(0, 64)
@@ -182,61 +221,15 @@ contract SoliditySprintSolutions is Test {
 
         //Scores slot is 6
         uint currPoints = sprint.scores(address(this));
-        uint desiredPoints = currPoints + (200 + (200*25));
+        uint desiredPoints = currPoints + (200 + (200*23));
         // desiredPoints++;
 
-        sprint.f22(address(this), desiredPoints);
-    }
-
-    function testf23() public pointsIncreased {
-        bytes memory code = address(this).code;
-        bytes32 dataHash;
-
-        uint length = address(this).code.length;
-
-        address addr = address(this);
-
-        assembly {
-            dataHash := extcodehash(addr)
-        }
-
-        sprint.f23(address(this), code, dataHash);
-
-        // assembly {
-            
-        // require(msg.sender.code.length > 0)
-        // let size := extcodesize(sender) //codeSize of msg.sender
-        // if eq(size, 0) { 
-        //     revert(0,0)
-        // }
-
-        // require(msg.sender != tx.origin)
-        // if eq(sender, origin()) { 
-        //     revert(0,0)
-        // }
-
-        // if gt(xor(hashData, hashSlingingSlasher), 0) {
-        //     revert(0,0)
-        // }
-
-        // require(extCodeHash == data.hash)
-        // extcodecopy(sender, 0, 0, size)
-        // let exthash := keccak256(0, size)
-
-        // if gt(xor(exthash, hashData), 0) {
-        //     revert(0,0)
-        // }
+        sprint.f23(address(this), desiredPoints);
 
     }
 
-    function onERC1155Received(
-        address operator,
-        address from,
-        uint256 id,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bytes4) {
-        return bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
+    fallback() external {
+        sprint.f13(address(this));
     }
 
     function supportsInterface(bytes4 interfaceId) external returns (bool) {
@@ -271,11 +264,11 @@ contract tempAttacker {
     constructor(address _teamAddr, address _currSprint) {
         teamAddr = _teamAddr;
         currSprint = _currSprint;
-        SoliditySprint2022(currSprint).f13(teamAddr);
+        SoliditySprint2022(currSprint).f14(teamAddr);
     }
 
     fallback() external {
-        SoliditySprint2022(currSprint).f16(teamAddr);
+        SoliditySprint2022(currSprint).f14(teamAddr);
     }
 }
 

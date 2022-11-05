@@ -1,6 +1,6 @@
 pragma solidity ^0.8.9;
 
-library merkleTree {
+library MerkleTree {
 
     function hashLeafPairs(bytes32 left, bytes32 right) internal pure returns (bytes32 _hash) {
        assembly {

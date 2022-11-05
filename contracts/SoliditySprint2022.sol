@@ -1,28 +1,25 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-
-// Uncomment this line to use console.log
-import "forge-std/console2.sol";
+import "./Clones.sol";
+import "./Cryptography.sol";
 import "./MerkleTree.sol";
+import "./Create2Contract.sol";
 
 interface ISupportsInterface {
     function supportsInterface(bytes4 interfaceId) external view returns(bool); 
 }
 
-contract SoliditySprint2022 is Ownable, ERC1155  {
+contract SoliditySprint2022 is Ownable {
 
     bool public live;
     bool public timeExtended = false;
 
-    mapping(address => string) public teams;
     mapping(address => uint) public scores;
     mapping(address => mapping(uint => bool)) public progress;
-    mapping(uint => uint) public points;
 
     mapping(address => uint) public entryCount;
     mapping(address => bool) public signers;
@@ -31,9 +28,7 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
 
     mapping(address => uint) public totallyLegitMapping;
 
-    address[] public teamAddresses;
-
-    create2Challenge public template;
+    Create2Contract public template;
     uint salt = 0;
 
     address public immutable weth;
@@ -41,17 +36,11 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
 
     uint startTime;
 
-    error getBetterAtAssemblyBro();
+    event registration(string name);
 
-    constructor(string memory uri, address _weth) ERC1155(uri){
-        for (uint x = 0; x <= 23; x++) {
-            
-            points[x] = 200 + (200*x);
-        }
+    constructor(address _weth) {
 
-        startTime = block.timestamp;
-
-        template = new create2Challenge();
+        template = new Create2Contract();
         weth = _weth;
 
         bytes32[] memory numbers = new bytes32[](20);
@@ -59,10 +48,11 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
             numbers[x] = bytes32(keccak256(abi.encodePacked(x)));
         }
         
-        merkleRoot = merkleTree.getRoot(numbers);
+        merkleRoot = MerkleTree.getRoot(numbers);
     }
 
     function start() public onlyOwner {
+        startTime = block.timestamp;
         live = true;
     }
 
@@ -75,64 +65,59 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
     }
 
     modifier isLive {
-        require(live, "Hackathon is not in session");
-        require(bytes(teams[msg.sender]).length == 0, "Already registered team");
-        
+        require(live);
+
         if (timeExtended) {
-            require(block.timestamp < startTime + 3 hours, "Time has expired");
+            require(block.timestamp < startTime + 3 hours);
         }
         else {
-            require(block.timestamp < startTime + 2 hours, "Time has expired");
+            require(block.timestamp < startTime + 2 hours);
 
         }
-
         _;
     }
 
     function registerTeam(string memory team) public isLive {
-        teams[msg.sender] = team;
-        teamAddresses.push(msg.sender);
+        emit registration(team);
     }
 
-    function givePoints(uint challengeNum, address team) internal {
+    function givePoints(uint challengeNum, address team, uint points) internal {
 
         progress[team][challengeNum] = true;
 
-        if (challengeNum != 22) {
-            scores[team] += (points[challengeNum] - solves[challengeNum]);
+        if (challengeNum != 23) {
+            scores[team] += (points - solves[challengeNum]);
         }
-
         solves[challengeNum]++;
-
     }
 
     function f0(bool val) public isLive {
         uint fNum = 0;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(!val, "incorrect boolean value");
+        require(!val);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 200);
     }
 
     function f1() public payable isLive {
         uint fNum = 1;
 
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(msg.value == 10 wei, "Invalid Message Value");
-        givePoints(fNum, msg.sender);
+        require(msg.value == 10 wei);
+        givePoints(fNum, msg.sender, 400);
     }
 
     function f2(uint val) public isLive {
         uint fNum = 2;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
         
         uint256 guess = uint256(keccak256(abi.encodePacked(val, msg.sender)));
 
-        require(guess % 5 == 0, "guess incorrect");
+        require(guess % 5 == 0);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 600);
 
     }
 
@@ -140,273 +125,244 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
         uint fNum = 3;
         uint xorData = data ^ 0x987654321;
 
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(xorData == 0xbeefdead, "Invalid Input");
-        givePoints(fNum, msg.sender);
+        require(xorData == 0xbeefdead);
+        givePoints(fNum, msg.sender, 800);
 
     }
 
 
     function f4(address destAddr) public isLive {
         uint fNum = 4;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(destAddr == address(this), "incorrect address. try again");
-        givePoints(fNum, msg.sender);
+        require(destAddr == address(this));
+        givePoints(fNum, msg.sender, 1000);
 
     }
 
     function f5(address destAddr) public isLive {
         uint fNum = 5;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(destAddr == msg.sender, "incorrect address. try again");
+        require(destAddr == msg.sender);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 1200);
 
     }
 
     function f6(address destAddr) public isLive {
         uint fNum = 6;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(destAddr == owner(), "incorrect address. try again");
+        require(destAddr == owner());
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 1400);
 
     }
 
     function f7() public isLive {
         uint fNum = 7;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(gasleft() > 6_969_420, "not enough gas for function");
+        require(gasleft() > 6_969_420);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 1600);
 
     }
 
 
     function f8(bytes calldata data) public isLive {
         uint fNum = 8;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(data.length == 32, "invalid length of data");
+        require(data.length == 32);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 1800);
 
     }
 
     function f9(bytes memory data) public isLive {
         uint fNum = 9;
 
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
         data = abi.encodePacked(msg.sig, data);
         require(data.length == 32);
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 2000);
 
     }
 
 
     function f10(int num1, int num2) public isLive {
         uint fNum = 10;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
-        require(num1 < 0 && num2 > 0, "first number must be negative and 2nd number positive");
+        require(num1 < 0 && num2 > 0);
         unchecked {
             int num3 = num1 - num2;
-            require(num3 > 10, "Difference of the two must be more than zero");
+            require(num3 > 10);
         }
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 2200);
 
     }
 
     function f11(int num1, int num2) public isLive {
         uint fNum = 11;
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
         require(num1 > 0 && num2 > 0, "Numbers must be greater than zero");
         unchecked {
             int num3 = num1 + num2;
-            require(num3 < -10, "Difference of the two must be more than zero");
+            require(num3 < -10);
         }
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 2400);
 
     }
 
     function f12(bytes memory data) public isLive {
         uint fNum = 12;
 
-        require(!progress[msg.sender][fNum], "Already completed this function");
+        require(!progress[msg.sender][fNum]);
 
 
         (bool success, bytes memory returnData) = address(this).call(data);
-        require(success, "internal function call did not succeed");
+        require(success);
         
         require(keccak256(returnData) == keccak256(abi.encode(0xdeadbeef)));
 
-        givePoints(fNum, msg.sender);
+        givePoints(fNum, msg.sender, 2600);
     }
 
     function f13(address team) public isLive {
         uint fNum = 13;
 
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
-        require(msg.sender.code.length == 0, "No contracts this time!");
+        // require(msg.sender.code.length == 0, "No contracts this time!");
+        require(msg.sender != tx.origin);
 
         if (entryCount[team] == 0) {
             entryCount[team]++;
             (bool sent, ) = msg.sender.call("");
-            require(sent, "external call failed");
+            require(sent);
         }
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 2800);
     }
 
-    function f14(address team, address expectedSigner, bytes memory signature) external isLive {
+    function f14(address team) public isLive {
         uint fNum = 14;
 
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
+
+        require(msg.sender.code.length == 0);
+        require(msg.sender != tx.origin);
+
+        if (entryCount[team] == 0) {
+            entryCount[team]++;
+            (bool sent, ) = msg.sender.call("");
+            require(sent);
+        }
+
+        givePoints(fNum, team, 3000);
+    }
+
+
+    function f15(address team, address expectedSigner, bytes memory signature) external isLive {
+        uint fNum = 15;
+
+        require(!progress[team][fNum]);
 
         bytes32 digest = keccak256("I don't like sand. It's course and rough and it gets everywhere");
         
-        // console2.logBytes32(digest);
-        
-        address signer = recover(digest, signature);
+        address signer = Cryptography.recover(digest, signature);
 
-        require(signer != address(0), "must be a valid signature by someone");
+        require(signer != address(0));
 
-        // console2.log("Actual signer: ", signer);
-        require(signer == expectedSigner, "Signer of the message did not match actual message signer");
-        require(!signers[signer], "NO REPLAY ATTACKS");
+        require(signer == expectedSigner);
+        require(!signers[signer]);
 
         signers[signer] = true;
-        givePoints(fNum, team);
-    }
-
-    function f15(uint amount, address dest, address team) public isLive {
-        uint fNum = 15;
-        require(!progress[team][fNum], "Already completed this function");
-
-        require(msg.sender.code.length > 0 && tx.origin != msg.sender, "Must be contract");
-        require(amount > 0, "must provide non-zero amount of FNFTs to mint");
-
-        uint id = uint(keccak256(abi.encode(msg.sender)));
-        _mint(dest, id, amount, "set the gearshift for the high gear of your soul");
-
-        givePoints(fNum, team);
+        givePoints(fNum, team, 3200);
     }
 
     function f16(address team) public isLive {
         uint fNum = 16;
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
         require(ISupportsInterface(msg.sender).supportsInterface(type(IERC20).interfaceId), "msg sender does not support interface");
     
-        givePoints(fNum, team);
+        givePoints(fNum, team, 3400);
     }
 
     function f17(address newContract, address team) public isLive {
         uint fNum = 17;
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
         address clone = Clones.cloneDeterministic(address(template), keccak256(abi.encode(msg.sender)));
-        require(newContract == clone, "Predicted address incorrect");
+        require(newContract == clone);
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 3600);
     }
 
     function f18(address team) public isLive {
         uint fNum = 18;
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
-        require(IERC20(weth).balanceOf(msg.sender) > 1e9 wei, "balance cannot be zero");
+        require(IERC20(weth).balanceOf(msg.sender) > 1e9 wei);
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 3800);
     }
 
     function f19(address team) public isLive {
         uint fNum = 19;
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
         IERC20(weth).transferFrom(msg.sender, address(this), 1e9 wei);
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 4000);
     }
 
     function f20(address team, bytes32[] calldata proof, bytes32 leaf) public isLive {
         uint fNum = 20;
-        require(!progress[team][fNum], "Already completed this function");
-        require(!usedLeaves[leaf], "Proof of this lead has already beef submitted");
+        require(!progress[team][fNum]);
+        require(!usedLeaves[leaf]);
 
-        require(MerkleProof.verify(proof, merkleRoot, leaf), "Proof could not verify");
+        require(MerkleProof.verify(proof, merkleRoot, leaf));
 
         usedLeaves[leaf] = true;
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 4200);
 
     }
 
     function f21(address team, uint value) public isLive {
         uint fNum = 21;
 
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
         uint result;
+
         assembly {
-            mstore(0, 21)
-            mstore(32, 8)
+            mstore(0, team)
+            mstore(32, 1)
             let hash := keccak256(0, 64)
             result := sload(hash)
         }
 
-        require(result == value, "incorrect value");
+        require(result == value);
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 4400);
     }
     
-    function f22(address team, uint value) public isLive {
+    function f22(address team, bytes calldata data, bytes32 hashSlingingSlasher) public isLive {
         uint fNum = 22;
-        require(!progress[team][fNum], "Already completed this function");
-
-         assembly {
-            mstore(0, team)
-            mstore(32, 6)
-            let hash := keccak256(0, 64)
-            let result := sload(hash)
-
-            mstore(0, 25)
-            mstore(32, 8)
-            hash := keccak256(0, 64)
-            let result2 := sload(hash)
-
-            mstore(0, team)
-            mstore(32, 6)
-            hash := keccak256(0, 64)
-            sstore(hash, value)
-
-            mstore(0, team)
-            mstore(32, 6)
-            hash := keccak256(0, 64)
-            let result3 := sload(hash)
-
-            if gt(xor(result3, add(result, add(mul(25, 200), 200))), 0) {
-                revert(0, 0)
-            }
-        }
-
-        givePoints(fNum, team);
-    }
-
-    function f23(address team, bytes calldata data, bytes32 hashSlingingSlasher) public isLive {
-        uint fNum = 23;
-        require(!progress[team][fNum], "Already completed this function");
+        require(!progress[team][fNum]);
 
         bytes32 hashData = keccak256(data);
         address sender = msg.sender;
@@ -433,71 +389,40 @@ contract SoliditySprint2022 is Ownable, ERC1155  {
             }
         }
 
-        givePoints(fNum, team);
+        givePoints(fNum, team, 4600);
+    }
 
+    function f23(address team, uint value) public isLive {
+
+        uint fNum = 23;
+        require(!progress[team][fNum]);
+
+         assembly {
+            mstore(0, team)
+            mstore(32, 1)
+            let hash := keccak256(0, 64)
+            let result := sload(hash)
+
+            mstore(0, team)
+            mstore(32, 1)
+            hash := keccak256(0, 64)
+            sstore(hash, value)
+
+            mstore(0, team)
+            mstore(32, 1)
+            hash := keccak256(0, 64)
+            let result3 := sload(hash)
+
+            if gt(xor(result3, add(result, add(mul(23, 200), 200))), 0) {
+                revert(0, 0)
+            }
+        }
+
+        givePoints(fNum, team, 4800);
     }
 
     function internalChallengeHook() public view isLive returns (uint) {
         require(msg.sender == address(this));
         return 0xdeadbeef;
     }
-
-    function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {
-        bytes32 r;
-        bytes32 s;
-        uint8 v;
-
-        //Check the signature length
-        if (sig.length != 65) {
-        return (address(0));
-        }
-
-        // Divide the signature in r, s and v variables
-        assembly {
-        r := mload(add(sig, 32))
-        s := mload(add(sig, 64))
-        v := byte(0, mload(add(sig, 96)))
-        }
-
-        // Version of signature should be 27 or 28, but 0 and 1 are also possible versions
-        if (v < 27) {
-        v += 27;
-        }
-
-        // If the version is correct return the signer address
-        if (v != 27 && v != 28) {
-            return (address(0));
-        } else {
-            return ecrecover(hash, v, r, s);
-        }
-    }
-
 }
-
-contract create2Challenge {
-    bytes public constant getRekt = "bet you can't guess my address before im even deployed";
-    constructor() {
-
-    }
-}
-
-library Clones {
-    /**
-     * @dev Deploys and returns the address of a clone that mimics the behaviour of `implementation`.
-     *
-     * This function uses the create2 opcode and a `salt` to deterministically deploy
-     * the clone. Using the same `implementation` and `salt` multiple time will revert, since
-     * the clones cannot be deployed twice at the same address.
-     */
-    function cloneDeterministic(address implementation, bytes32 salt) internal returns (address instance) {
-        assembly {
-            let ptr := mload(0x40)
-            mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)
-            mstore(add(ptr, 0x14), shl(0x60, implementation))
-            mstore(add(ptr, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)
-            instance := create2(0, ptr, 0x37, salt)
-        }
-        require(instance != address(0), "ERC1167: create2 failed");
-    }
-}
-

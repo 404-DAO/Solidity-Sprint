@@ -9,10 +9,18 @@ require('dotenv').config();
 
 async function main() {
 
-  const tokenURI = "https://www.youtube.com/watch?v=dQw4w9WgXcQ?id=";
+  const goeriWeth = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"
 
-  const Sprint = await hre.ethers.getContractFactory("SoliditySprint2022");
-  const sprint = await Sprint.deploy(tokenURI);
+  const merkleDeployer = await hre.ethers.getContractFactory("MerkleTree");
+  const merkle = await merkleDeployer.deploy();
+  await merkle.deployed()
+
+  const Sprint = await hre.ethers.getContractFactory("SoliditySprint2022", {
+    libraries: {
+      MerkleTree: merkle.address
+    }
+  });
+  const sprint = await Sprint.deploy(goeriWeth);
 
   await sprint.deployed();
 

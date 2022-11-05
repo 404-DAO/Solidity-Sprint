@@ -12,10 +12,10 @@
     ]
   },
   "files": {
-    "lib/forge-std/lib/ds-test/src/test.sol": {
-      "lastModificationDate": 1667167390853,
-      "contentHash": "962996f0e05d5218857a538a62d7c47e",
-      "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
+    "contracts/Clones.sol": {
+      "lastModificationDate": 1667622454017,
+      "contentHash": "e252b315c1b153c52288fa1bd4bb103d",
+      "sourceName": "contracts/Clones.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -23,7 +23,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -34,7 +35,221 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "Clones": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Clones.sol/Clones.json"
+        }
+      }
+    },
+    "contracts/Create2Contract.sol": {
+      "lastModificationDate": 1667622454017,
+      "contentHash": "fe4e3fa683462900ad9c2e471d687f05",
+      "sourceName": "contracts/Create2Contract.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "Create2Contract": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Create2Contract.sol/Create2Contract.json"
+        }
+      }
+    },
+    "contracts/Cryptography.sol": {
+      "lastModificationDate": 1667622454017,
+      "contentHash": "af14774dabe861ac08ac98974e85fe31",
+      "sourceName": "contracts/Cryptography.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "Cryptography": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Cryptography.sol/Cryptography.json"
+        }
+      }
+    },
+    "contracts/MerkleTree.sol": {
+      "lastModificationDate": 1667622454018,
+      "contentHash": "efb4309eaa46e420b6455f8f4088c244",
+      "sourceName": "contracts/MerkleTree.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "MerkleTree": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "MerkleTree.sol/MerkleTree.json"
+        }
+      }
+    },
+    "contracts/SoliditySprint2022.sol": {
+      "lastModificationDate": 1667663396993,
+      "contentHash": "0e2aa90f9a320a47713b6043daccf3cf",
+      "sourceName": "contracts/SoliditySprint2022.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "contracts/Clones.sol",
+        "contracts/Create2Contract.sol",
+        "contracts/Cryptography.sol",
+        "contracts/MerkleTree.sol",
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
+        "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
+        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "node_modules/@openzeppelin/contracts/utils/Context.sol",
+        "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol"
+      ],
+      "versionRequirement": "^0.8.9",
+      "artifacts": {
+        "ISupportsInterface": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "SoliditySprint2022.sol/ISupportsInterface.json"
+        },
+        "SoliditySprint2022": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "SoliditySprint2022.sol/SoliditySprint2022.json"
+        }
+      }
+    },
+    "lib/forge-std/lib/ds-test/src/test.sol": {
+      "lastModificationDate": 1667535969631,
+      "contentHash": "962996f0e05d5218857a538a62d7c47e",
+      "sourceName": "lib/forge-std/lib/ds-test/src/test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -46,14 +261,14 @@
       "versionRequirement": ">=0.5.0",
       "artifacts": {
         "DSTest": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "test.sol/DSTest.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "test.sol/DSTest.json"
         }
       }
     },
-    "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1667167333662,
-      "contentHash": "d151fbfe7939989b9acf22797b32058b",
-      "sourceName": "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
+    "lib/forge-std/src/Script.sol": {
+      "lastModificationDate": 1667535968981,
+      "contentHash": "571dde8775a6214a03d6772ee330ead5",
+      "sourceName": "lib/forge-std/src/Script.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -61,7 +276,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -72,7 +288,313 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Script": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Script.sol/Script.json"
+        }
+      }
+    },
+    "lib/forge-std/src/StdJson.sol": {
+      "lastModificationDate": 1667535968981,
+      "contentHash": "75c782f20a301ab9827060a03da071e4",
+      "sourceName": "lib/forge-std/src/StdJson.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/Vm.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "stdJson": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "StdJson.sol/stdJson.json"
+        }
+      }
+    },
+    "lib/forge-std/src/Test.sol": {
+      "lastModificationDate": 1667535968981,
+      "contentHash": "6cab65c53a9548c2428a10697fd06dd1",
+      "sourceName": "lib/forge-std/src/Test.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
+      ],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Test": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Test.sol/Test.json"
+        },
+        "stdError": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Test.sol/stdError.json"
+        },
+        "stdMath": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Test.sol/stdMath.json"
+        },
+        "stdStorage": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Test.sol/stdStorage.json"
+        }
+      }
+    },
+    "lib/forge-std/src/Vm.sol": {
+      "lastModificationDate": 1667535968982,
+      "contentHash": "bd4bde818b3c57b21e0601277b1d2dac",
+      "sourceName": "lib/forge-std/src/Vm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.6.0, <0.9.0",
+      "artifacts": {
+        "Vm": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Vm.sol/Vm.json"
+        }
+      }
+    },
+    "lib/forge-std/src/console.sol": {
+      "lastModificationDate": 1667535968982,
+      "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
+      "sourceName": "lib/forge-std/src/console.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "console.sol/console.json"
+        }
+      }
+    },
+    "lib/forge-std/src/console2.sol": {
+      "lastModificationDate": 1667535968982,
+      "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
+      "sourceName": "lib/forge-std/src/console2.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": ">=0.4.22, <0.9.0",
+      "artifacts": {
+        "console2": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "console2.sol/console2.json"
+        }
+      }
+    },
+    "node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1667168328234,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "node_modules/@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "node_modules/@openzeppelin/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Ownable": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Ownable.sol/Ownable.json"
+        }
+      }
+    },
+    "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1667168328210,
+      "contentHash": "d151fbfe7939989b9acf22797b32058b",
+      "sourceName": "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -86,12 +608,12 @@
       "versionRequirement": "^0.8.0",
       "artifacts": {
         "IERC20": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "IERC20.sol/IERC20.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "interfaces/IERC20.sol/IERC20.json"
         }
       }
     },
     "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1667167333662,
+      "lastModificationDate": 1667168328211,
       "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
       "sourceName": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -101,7 +623,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -112,7 +635,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -124,14 +648,14 @@
       "versionRequirement": "^0.8.0",
       "artifacts": {
         "IERC20": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "IERC20.sol/IERC20.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "IERC20.sol/IERC20.json"
         }
       }
     },
-    "node_modules/forge-std/Script.sol": {
-      "lastModificationDate": 1667616812472,
-      "contentHash": "3acd67e1ab7b1ccf0a734f0c64d40f99",
-      "sourceName": "node_modules/forge-std/Script.sol",
+    "node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1667168328138,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "node_modules/@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -139,7 +663,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -150,102 +675,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "node_modules/forge-std/Vm.sol",
-        "node_modules/forge-std/console.sol",
-        "node_modules/forge-std/console2.sol"
-      ],
-      "versionRequirement": ">=0.6.0, <0.9.0",
-      "artifacts": {
-        "Script": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Script.sol/Script.json"
-        }
-      }
-    },
-    "node_modules/forge-std/Test.sol": {
-      "lastModificationDate": 1667616812480,
-      "contentHash": "13aee49ec8a282357c1c77015077c401",
-      "sourceName": "node_modules/forge-std/Test.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "lib/forge-std/lib/ds-test/src/test.sol",
-        "node_modules/forge-std/Script.sol",
-        "node_modules/forge-std/Vm.sol",
-        "node_modules/forge-std/console.sol",
-        "node_modules/forge-std/console2.sol"
-      ],
-      "versionRequirement": ">=0.6.0, <0.9.0",
-      "artifacts": {
-        "Test": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/Test.json"
-        },
-        "stdError": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdError.json"
-        },
-        "stdMath": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdMath.json"
-        },
-        "stdStorage": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Test.sol/stdStorage.json"
-        }
-      }
-    },
-    "node_modules/forge-std/Vm.sol": {
-      "lastModificationDate": 1667616812480,
-      "contentHash": "21c08ad1724e83f3778bfc81feef3d7d",
-      "sourceName": "node_modules/forge-std/Vm.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -254,17 +685,17 @@
         }
       },
       "imports": [],
-      "versionRequirement": ">=0.6.0",
+      "versionRequirement": "^0.8.0",
       "artifacts": {
-        "Vm": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Vm.sol/Vm.json"
+        "Context": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Context.sol/Context.json"
         }
       }
     },
-    "node_modules/forge-std/console.sol": {
-      "lastModificationDate": 1667616812468,
-      "contentHash": "100b8a33b917da1147740d7ab8b0ded3",
-      "sourceName": "node_modules/forge-std/console.sol",
+    "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol": {
+      "lastModificationDate": 1667168328233,
+      "contentHash": "04d20a7656ab3b219a40d6dad3669ab5",
+      "sourceName": "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -272,7 +703,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -283,7 +715,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -292,53 +725,15 @@
         }
       },
       "imports": [],
-      "versionRequirement": ">=0.4.22, <0.9.0",
+      "versionRequirement": "^0.8.0",
       "artifacts": {
-        "console": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "console.sol/console.json"
-        }
-      }
-    },
-    "node_modules/forge-std/console2.sol": {
-      "lastModificationDate": 1667616812472,
-      "contentHash": "5df91f8e93efbfcccf68973dc1b74a70",
-      "sourceName": "node_modules/forge-std/console2.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": ">=0.4.22, <0.9.0",
-      "artifacts": {
-        "console2": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "console2.sol/console2.json"
+        "MerkleProof": {
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "MerkleProof.sol/MerkleProof.json"
         }
       }
     },
     "script/Contract.s.sol": {
-      "lastModificationDate": 1667167390169,
+      "lastModificationDate": 1667168302560,
       "contentHash": "3642d05d9c479368231825c40aaa276a",
       "sourceName": "script/Contract.s.sol",
       "solcConfig": {
@@ -348,7 +743,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -359,7 +755,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -368,20 +765,21 @@
         }
       },
       "imports": [
-        "node_modules/forge-std/Script.sol",
-        "node_modules/forge-std/Vm.sol",
-        "node_modules/forge-std/console.sol",
-        "node_modules/forge-std/console2.sol"
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "ContractScript": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Contract.s.sol/ContractScript.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Contract.s.sol/ContractScript.json"
         }
       }
     },
     "src/Contract.sol": {
-      "lastModificationDate": 1667167390169,
+      "lastModificationDate": 1667168302560,
       "contentHash": "0a4db02f64172ef6ba21d89f49444a92",
       "sourceName": "src/Contract.sol",
       "solcConfig": {
@@ -391,7 +789,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -402,7 +801,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -414,12 +814,12 @@
       "versionRequirement": "^0.8.13",
       "artifacts": {
         "Contract": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "Contract.sol/Contract.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "Contract.sol/Contract.json"
         }
       }
     },
     "test/foundry/MerkleProofs.sol": {
-      "lastModificationDate": 1667356250228,
+      "lastModificationDate": 1667535658832,
       "contentHash": "470a1733705cb3b1392f6826b773dd06",
       "sourceName": "test/foundry/MerkleProofs.sol",
       "solcConfig": {
@@ -429,7 +829,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -440,7 +841,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -452,12 +854,12 @@
       "versionRequirement": "^0.8.9",
       "artifacts": {
         "merkleProofs": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "MerkleProofs.sol/merkleProofs.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "MerkleProofs.sol/merkleProofs.json"
         }
       }
     },
     "test/foundry/SoliditySprintSolutions.t.sol": {
-      "lastModificationDate": 1667617511267,
+      "lastModificationDate": 1667622454051,
       "contentHash": "0737cfd65ea2ceebbd108a3d8285694c",
       "sourceName": "test/foundry/SoliditySprintSolutions.t.sol",
       "solcConfig": {
@@ -467,7 +869,8 @@
             "runs": 200
           },
           "metadata": {
-            "bytecodeHash": "ipfs"
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
           },
           "outputSelection": {
             "*": {
@@ -478,7 +881,8 @@
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
-                "evm.methodIdentifiers"
+                "evm.methodIdentifiers",
+                "metadata"
               ]
             }
           },
@@ -487,23 +891,32 @@
         }
       },
       "imports": [
+        "contracts/Clones.sol",
+        "contracts/Create2Contract.sol",
+        "contracts/Cryptography.sol",
+        "contracts/MerkleTree.sol",
+        "contracts/SoliditySprint2022.sol",
         "lib/forge-std/lib/ds-test/src/test.sol",
+        "lib/forge-std/src/Script.sol",
+        "lib/forge-std/src/StdJson.sol",
+        "lib/forge-std/src/Test.sol",
+        "lib/forge-std/src/Vm.sol",
+        "lib/forge-std/src/console.sol",
+        "lib/forge-std/src/console2.sol",
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
         "node_modules/@openzeppelin/contracts/interfaces/IERC20.sol",
         "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "node_modules/forge-std/Script.sol",
-        "node_modules/forge-std/Test.sol",
-        "node_modules/forge-std/Vm.sol",
-        "node_modules/forge-std/console.sol",
-        "node_modules/forge-std/console2.sol",
+        "node_modules/@openzeppelin/contracts/utils/Context.sol",
+        "node_modules/@openzeppelin/contracts/utils/cryptography/MerkleProof.sol",
         "test/foundry/MerkleProofs.sol"
       ],
       "versionRequirement": null,
       "artifacts": {
         "SoliditySprintSolutions": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "SoliditySprintSolutions.t.sol/SoliditySprintSolutions.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "SoliditySprintSolutions.t.sol/SoliditySprintSolutions.json"
         },
         "tempAttacker": {
-          "0.8.13+commit.abaa5c0e.Linux.gcc": "SoliditySprintSolutions.t.sol/tempAttacker.json"
+          "0.8.17+commit.8df45f5f.Darwin.appleclang": "SoliditySprintSolutions.t.sol/tempAttacker.json"
         }
       }
     }

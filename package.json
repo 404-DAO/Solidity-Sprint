@@ -7,7 +7,10 @@
     "dotenv": "^16.0.3"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@openzeppelin/contracts": "^4.7.3",
-    "forge-std": "^1.1.2"
+    "forge-std": "^1.1.2",
+    "i": "^0.3.7",
+    "npm": "^8.19.3"
   }
 }

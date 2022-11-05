@@ -11,9 +11,13 @@ async function main() {
 
   const goeriWeth = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"
 
+  console.log("DEPLOYING LIBRARY")
+
   const merkleDeployer = await hre.ethers.getContractFactory("MerkleTree");
   const merkle = await merkleDeployer.deploy();
   await merkle.deployed()
+
+  console.log("MERKLE DEPLOYED")
 
   const Sprint = await hre.ethers.getContractFactory("SoliditySprint2022", {
     libraries: {

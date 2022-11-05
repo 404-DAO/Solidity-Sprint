@@ -77,8 +77,8 @@ contract SoliditySprint2022 is Ownable {
         _;
     }
 
-    function registerTeam(string memory team, address teamAddr) public isLive {
-        emit registration(team, teamAddr);
+    function registerTeam(string memory team) public isLive {
+        emit registration(team, msg.sender);
     }
 
     function givePoints(uint challengeNum, address team, uint points) internal {

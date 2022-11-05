@@ -21,7 +21,8 @@ module.exports = {
     },
     goerli: {
       url: `https://eth-goerli.g.alchemy.com/v2/IUecvYBdoO5yV2eWtjiL5u_Pb-57HJhF`,
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY],
+      gasPrice: 100e9,
     },
   },
   etherscan: {

@@ -36,7 +36,7 @@ contract SoliditySprint2022 is Ownable {
 
     uint public startTime;
 
-    event registration(string indexed name, address indexed teamAddr);
+    event registration(address indexed teamAddr, string name);
 
     constructor(address _weth) {
 
@@ -78,7 +78,7 @@ contract SoliditySprint2022 is Ownable {
     }
 
     function registerTeam(string memory team) public isLive {
-        emit registration(team, msg.sender);
+        emit registration(msg.sender, team);
     }
 
     function givePoints(uint challengeNum, address team, uint points) internal {

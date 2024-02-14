@@ -38,7 +38,7 @@ contract SoliditySprint2022 is Ownable {
 
     event registration(address indexed teamAddr, string name);
 
-    constructor(address _weth) {
+    constructor(address _weth) Ownable(msg.sender) {
 
         template = new Create2Contract();
         weth = _weth;
